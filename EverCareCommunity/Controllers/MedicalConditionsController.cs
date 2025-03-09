@@ -48,7 +48,7 @@ namespace EverCareCommunity.Controllers
         // GET: MedicalConditions/Create
         public IActionResult Create()
         {
-            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "Email");
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "FirstName");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace EverCareCommunity.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "Email", medicalCondition.ResidentID);
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "FirstName", medicalCondition.ResidentID);
             return View(medicalCondition);
         }
 
@@ -82,7 +82,7 @@ namespace EverCareCommunity.Controllers
             {
                 return NotFound();
             }
-            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "Email", medicalCondition.ResidentID);
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "FirstName", medicalCondition.ResidentID);
             return View(medicalCondition);
         }
 
@@ -118,7 +118,7 @@ namespace EverCareCommunity.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "Email", medicalCondition.ResidentID);
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "FirstName", medicalCondition.ResidentID);
             return View(medicalCondition);
         }
 

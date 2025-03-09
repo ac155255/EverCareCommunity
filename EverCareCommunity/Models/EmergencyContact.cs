@@ -3,6 +3,17 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Net;
 
+
+public enum RelationshipType
+{
+    Parent,
+    Child,
+    Spouse,
+    Sibling,
+    Guardian,
+    Friend,
+    Other
+}
 public class EmergencyContact
 {
     [Key]
@@ -31,16 +42,7 @@ public class EmergencyContact
     [RegularExpression(@"^\+?[0-9\s-]+$", ErrorMessage = "Phone number can only contain digits, spaces, dashes, and an optional leading +.")]
     public string PhoneNumber { get; set; }
 
-    public enum RelationshipType
-    {
-        Parent,
-        Child,
-        Spouse,
-        Sibling,
-        Guardian,
-        Friend,
-        Other
-    }
+    
 
     public ElderlyResident ElderlyResident { get; set; }
     public Address Address { get; set; }

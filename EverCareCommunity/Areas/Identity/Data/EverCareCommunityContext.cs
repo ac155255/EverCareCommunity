@@ -44,6 +44,7 @@ public class EverCareCommunityContext : IdentityDbContext<EverCareCommunityUser>
             .WithMany(er => er.EmergencyContacts)
             .HasForeignKey(ec => ec.ResidentID)
             .OnDelete(DeleteBehavior.NoAction);
+       
     }
     public DbSet<EverCareCommunity.Models.ElderlyResident> ElderlyResident { get; set; } = default!;
 

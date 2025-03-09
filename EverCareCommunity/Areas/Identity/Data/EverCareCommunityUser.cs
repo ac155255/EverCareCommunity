@@ -9,5 +9,6 @@ namespace EverCareCommunity.Areas.Identity.Data;
 // Add profile data for application users by adding properties to the EverCareCommunityUser class
 public class EverCareCommunityUser : IdentityUser
 {
+   
 }
 

@@ -2,6 +2,15 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+
+public enum Qualification
+{
+    FirstAidAndCPR,
+    CaregiverCertification,
+    HomeHealthAideCertification,
+    FoodHandlingAndNutrition,
+    AlzheimersAndDementiaCare
+}
 public class Caregiver
 {
     [Key]
@@ -30,14 +39,8 @@ public class Caregiver
     public string Phone { get; set; }
 
     
-    public enum Qualification
-    {
-        FirstAidAndCPR,
-        CaregiverCertification,
-        HomeHealthAideCertification,
-        FoodHandlingAndNutrition,
-        AlzheimersAndDementiaCare
-    }
+    
+    
 
     
     public int Experience { get; set; }

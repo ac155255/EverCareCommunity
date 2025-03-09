@@ -3,6 +3,16 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+
+
+public enum AppointmentStatus
+{
+    Scheduled,
+    Completed,
+    Cancelled
+}
+
+
 public class Appointment
 {
     [Key]
@@ -46,13 +56,7 @@ public class Appointment
     }
 
     
-    public enum AppointmentStatus
-    {
-        Scheduled,
-        Completed,
-        Cancelled
-    }
-
+   
     // Corrected Navigation Properties
     public Doctor Doctor { get; set; }
     public ElderlyResident ElderlyResident { get; set; }

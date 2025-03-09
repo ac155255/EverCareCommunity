@@ -49,8 +49,8 @@ namespace EverCareCommunity.Controllers
         // GET: MedicalRecords/Create
         public IActionResult Create()
         {
-            ViewData["DoctorID"] = new SelectList(_context.Doctor, "DoctorID", "Email");
-            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "Email");
+            ViewData["DoctorID"] = new SelectList(_context.Doctor, "DoctorID", "LicenseNumber");
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "FirstName");
             return View();
         }
 
@@ -67,8 +67,8 @@ namespace EverCareCommunity.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DoctorID"] = new SelectList(_context.Doctor, "DoctorID", "Email", medicalRecord.DoctorID);
-            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "Email", medicalRecord.ResidentID);
+            ViewData["DoctorID"] = new SelectList(_context.Doctor, "DoctorID", "LicenseNumber", medicalRecord.DoctorID);
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "FirstName", medicalRecord.ResidentID);
             return View(medicalRecord);
         }
 
@@ -85,8 +85,8 @@ namespace EverCareCommunity.Controllers
             {
                 return NotFound();
             }
-            ViewData["DoctorID"] = new SelectList(_context.Doctor, "DoctorID", "Email", medicalRecord.DoctorID);
-            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "Email", medicalRecord.ResidentID);
+            ViewData["DoctorID"] = new SelectList(_context.Doctor, "DoctorID", "LicenseNumber", medicalRecord.DoctorID);
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "FirstName", medicalRecord.ResidentID);
             return View(medicalRecord);
         }
 
@@ -122,8 +122,8 @@ namespace EverCareCommunity.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DoctorID"] = new SelectList(_context.Doctor, "DoctorID", "Email", medicalRecord.DoctorID);
-            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "Email", medicalRecord.ResidentID);
+            ViewData["DoctorID"] = new SelectList(_context.Doctor, "DoctorID", "LicenseNumber", medicalRecord.DoctorID);
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "FirstName", medicalRecord.ResidentID);
             return View(medicalRecord);
         }
 

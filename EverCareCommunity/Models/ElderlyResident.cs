@@ -4,6 +4,14 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+
+
+public enum GenderType
+{
+    Male,
+    Female,
+    Other
+}
 public class ElderlyResident
 {
     [Key]
@@ -29,8 +37,7 @@ public class ElderlyResident
     [RegularExpression(@"^\+?[0-9\s-]+$", ErrorMessage = "Phone number can only contain digits, spaces, dashes, and an optional leading +.")]
     public string PhoneNumber { get; set; }
 
-    [Required]
-    [RegularExpression("^(Male|Female|Other)$", ErrorMessage = "Invalid gender type")]
+   
     public GenderType Gender{ get; set; }
 
     [Required(ErrorMessage = "Date of birth is required.")]
@@ -56,12 +63,7 @@ public class ElderlyResident
         }
         return ValidationResult.Success;
     }
-    public enum GenderType
-    {
-        Male,
-        Female,
-        Other
-    }
+   
 
     [MaxLength(255)]
         public string Address { get; set; }

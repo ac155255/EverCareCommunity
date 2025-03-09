@@ -49,8 +49,8 @@ namespace EverCareCommunity.Controllers
         // GET: EmergencyContacts/Create
         public IActionResult Create()
         {
-            ViewData["AddressID"] = new SelectList(_context.Address, "AddressID", "City");
-            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "Email");
+            ViewData["AddressID"] = new SelectList(_context.Address, "AddressID", "Street");
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "FirstName");
             return View();
         }
 
@@ -67,8 +67,8 @@ namespace EverCareCommunity.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AddressID"] = new SelectList(_context.Address, "AddressID", "City", emergencyContact.AddressID);
-            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "Email", emergencyContact.ResidentID);
+            ViewData["AddressID"] = new SelectList(_context.Address, "AddressID", "Street", emergencyContact.AddressID);
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "FirstName", emergencyContact.ResidentID);
             return View(emergencyContact);
         }
 
@@ -85,8 +85,8 @@ namespace EverCareCommunity.Controllers
             {
                 return NotFound();
             }
-            ViewData["AddressID"] = new SelectList(_context.Address, "AddressID", "City", emergencyContact.AddressID);
-            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "Email", emergencyContact.ResidentID);
+            ViewData["AddressID"] = new SelectList(_context.Address, "AddressID", "Street", emergencyContact.AddressID);
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "FirstName", emergencyContact.ResidentID);
             return View(emergencyContact);
         }
 
@@ -122,8 +122,8 @@ namespace EverCareCommunity.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AddressID"] = new SelectList(_context.Address, "AddressID", "City", emergencyContact.AddressID);
-            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "Email", emergencyContact.ResidentID);
+            ViewData["AddressID"] = new SelectList(_context.Address, "AddressID", "Street", emergencyContact.AddressID);
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "FirstName", emergencyContact.ResidentID);
             return View(emergencyContact);
         }
 
