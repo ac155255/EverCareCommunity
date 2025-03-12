@@ -22,19 +22,19 @@ namespace EverCareCommunity.Controllers
         // GET: MedicalConditions
         public async Task<IActionResult> Index()
         {
-            var everCareCommunityContext = _context.MedicalCondition.Include(m => m.ElderlyResident);
+            var everCareCommunityContext = _context.MedicalConditions.Include(m => m.ElderlyResident);
             return View(await everCareCommunityContext.ToListAsync());
         }
 
         // GET: MedicalConditions/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.MedicalCondition == null)
+            if (id == null || _context.MedicalConditions == null)
             {
                 return NotFound();
             }
 
-            var medicalCondition = await _context.MedicalCondition
+            var medicalCondition = await _context.MedicalConditions
                 .Include(m => m.ElderlyResident)
                 .FirstOrDefaultAsync(m => m.ConditionID == id);
             if (medicalCondition == null)
@@ -48,7 +48,7 @@ namespace EverCareCommunity.Controllers
         // GET: MedicalConditions/Create
         public IActionResult Create()
         {
-            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "FirstName");
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResidents, "ResidentID", "FirstName");
             return View();
         }
 
@@ -65,24 +65,24 @@ namespace EverCareCommunity.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "FirstName", medicalCondition.ResidentID);
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResidents, "ResidentID", "FirstName", medicalCondition.ResidentID);
             return View(medicalCondition);
         }
 
         // GET: MedicalConditions/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.MedicalCondition == null)
+            if (id == null || _context.MedicalConditions == null)
             {
                 return NotFound();
             }
 
-            var medicalCondition = await _context.MedicalCondition.FindAsync(id);
+            var medicalCondition = await _context.MedicalConditions.FindAsync(id);
             if (medicalCondition == null)
             {
                 return NotFound();
             }
-            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "FirstName", medicalCondition.ResidentID);
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResidents, "ResidentID", "FirstName", medicalCondition.ResidentID);
             return View(medicalCondition);
         }
 
@@ -118,19 +118,19 @@ namespace EverCareCommunity.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "FirstName", medicalCondition.ResidentID);
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResidents, "ResidentID", "FirstName", medicalCondition.ResidentID);
             return View(medicalCondition);
         }
 
         // GET: MedicalConditions/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.MedicalCondition == null)
+            if (id == null || _context.MedicalConditions == null)
             {
                 return NotFound();
             }
 
-            var medicalCondition = await _context.MedicalCondition
+            var medicalCondition = await _context.MedicalConditions
                 .Include(m => m.ElderlyResident)
                 .FirstOrDefaultAsync(m => m.ConditionID == id);
             if (medicalCondition == null)
@@ -146,14 +146,14 @@ namespace EverCareCommunity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.MedicalCondition == null)
+            if (_context.MedicalConditions == null)
             {
-                return Problem("Entity set 'EverCareCommunityContext.MedicalCondition'  is null.");
+                return Problem("Entity set 'EverCareCommunityContext.MedicalConditions'  is null.");
             }
-            var medicalCondition = await _context.MedicalCondition.FindAsync(id);
+            var medicalCondition = await _context.MedicalConditions.FindAsync(id);
             if (medicalCondition != null)
             {
-                _context.MedicalCondition.Remove(medicalCondition);
+                _context.MedicalConditions.Remove(medicalCondition);
             }
             
             await _context.SaveChangesAsync();
@@ -162,7 +162,7 @@ namespace EverCareCommunity.Controllers
 
         private bool MedicalConditionExists(int id)
         {
-          return (_context.MedicalCondition?.Any(e => e.ConditionID == id)).GetValueOrDefault();
+          return (_context.MedicalConditions?.Any(e => e.ConditionID == id)).GetValueOrDefault();
         }
     }
 }

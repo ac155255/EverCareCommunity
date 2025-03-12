@@ -13,6 +13,16 @@ public class EverCareCommunityContext : IdentityDbContext<EverCareCommunityUser>
     {
     }
 
+    public DbSet<ElderlyResident> ElderlyResidents { get; set; } = default!;
+    public DbSet<Address> Addresses { get; set; } = default!;
+    public DbSet<Appointment> Appointments { get; set; } = default!;
+    public DbSet<Caregiver> Caregivers { get; set; } = default!;
+    public DbSet<CaregiverResidentAssignment> CaregiverResidentAssignments { get; set; } = default!;
+    public DbSet<Doctor> Doctors { get; set; } = default!;
+    public DbSet<EmergencyContact> EmergencyContacts { get; set; } = default!;
+    public DbSet<MedicalCondition> MedicalConditions { get; set; } = default!;
+    public DbSet<MedicalRecord> MedicalRecords { get; set; } = default!;
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -44,23 +54,12 @@ public class EverCareCommunityContext : IdentityDbContext<EverCareCommunityUser>
             .WithMany(er => er.EmergencyContacts)
             .HasForeignKey(ec => ec.ResidentID)
             .OnDelete(DeleteBehavior.NoAction);
-       
+
+        // Prevent cascade delete in Address → ElderlyResident
+        modelBuilder.Entity<Address>()
+            .HasOne(a => a.ElderlyResident)
+            .WithMany(e => e.Addresses)
+            .HasForeignKey(a => a.ResidentID)
+            .OnDelete(DeleteBehavior.Cascade);
     }
-    public DbSet<EverCareCommunity.Models.ElderlyResident> ElderlyResident { get; set; } = default!;
-
-    public DbSet<EverCareCommunity.Models.Address> Address { get; set; } = default!;
-
-    public DbSet<EverCareCommunity.Models.Appointment> Appointment { get; set; } = default!;
-
-    public DbSet<EverCareCommunity.Models.Caregiver> Caregiver { get; set; } = default!;
-
-    public DbSet<EverCareCommunity.Models.CaregiverResidentAssignment> CaregiverResidentAssignment { get; set; } = default!;
-
-    public DbSet<EverCareCommunity.Models.Doctor> Doctor { get; set; } = default!;
-
-    public DbSet<EverCareCommunity.Models.EmergencyContact> EmergencyContact { get; set; } = default!;
-
-    public DbSet<EverCareCommunity.Models.MedicalCondition> MedicalCondition { get; set; } = default!;
-
-    public DbSet<EverCareCommunity.Models.MedicalRecord> MedicalRecord { get; set; } = default!;
 }

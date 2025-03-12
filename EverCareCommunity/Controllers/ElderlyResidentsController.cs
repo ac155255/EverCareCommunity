@@ -20,22 +20,73 @@ namespace EverCareCommunity.Controllers
         }
 
         // GET: ElderlyResidents
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+    string sortOrder,
+    string currentFilter,
+    string searchString,
+    int? pageNumber)
         {
-              return _context.ElderlyResident != null ? 
-                          View(await _context.ElderlyResident.ToListAsync()) :
-                          Problem("Entity set 'EverCareCommunityContext.ElderlyResident'  is null.");
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+            
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var residents = _context.ElderlyResidents
+     .Select(s => new ElderlyResident
+     {
+         ResidentID = s.ResidentID,
+         FirstName = s.FirstName,
+         LastName = s.LastName,
+         Email = s.Email,
+         PhoneNumber = s.PhoneNumber,
+         Gender = s.Gender,
+         Address = s.Address,
+         DateOfBirth = s.DateOfBirth
+     });
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                residents = residents.Where(s => s.FirstName.Contains(searchString)
+                                       || s.LastName.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    residents = residents.OrderByDescending(s => s.FirstName);
+                    break;
+                case "Date":
+                    residents = residents.OrderBy(s => s.DateOfBirth);
+                    break;
+                case "date_desc":
+                    residents = residents.OrderByDescending(s => s.DateOfBirth);
+                    break;
+                default:
+                    residents = residents.OrderBy(s => s.FirstName);
+                    break;
+            }
+            int pageSize = 3;
+            return View(await PaginatedList<ElderlyResident>.CreateAsync(residents.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: ElderlyResidents/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.ElderlyResident == null)
+            if (id == null || _context.ElderlyResidents == null)
             {
                 return NotFound();
             }
 
-            var elderlyResident = await _context.ElderlyResident
+            var elderlyResident = await _context.ElderlyResidents
                 .FirstOrDefaultAsync(m => m.ResidentID == id);
             if (elderlyResident == null)
             {
@@ -56,7 +107,7 @@ namespace EverCareCommunity.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ResidentID,FirstName,LastName,Email,PhoneNumber,DateOfBirth,Gender,Address")] ElderlyResident elderlyResident)
+        public async Task<IActionResult> Create([Bind("ResidentID,FirstName,LastName,Email,PhoneNumber,Gender,DateOfBirth,Address")] ElderlyResident elderlyResident)
         {
             if (!ModelState.IsValid)
             {
@@ -70,12 +121,12 @@ namespace EverCareCommunity.Controllers
         // GET: ElderlyResidents/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.ElderlyResident == null)
+            if (id == null || _context.ElderlyResidents == null)
             {
                 return NotFound();
             }
 
-            var elderlyResident = await _context.ElderlyResident.FindAsync(id);
+            var elderlyResident = await _context.ElderlyResidents.FindAsync(id);
             if (elderlyResident == null)
             {
                 return NotFound();
@@ -88,7 +139,7 @@ namespace EverCareCommunity.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ResidentID,FirstName,LastName,Email,PhoneNumber,DateOfBirth,Gender,Address")] ElderlyResident elderlyResident)
+        public async Task<IActionResult> Edit(int id, [Bind("ResidentID,FirstName,LastName,Email,PhoneNumber,Gender,DateOfBirth,Address")] ElderlyResident elderlyResident)
         {
             if (id != elderlyResident.ResidentID)
             {
@@ -121,12 +172,12 @@ namespace EverCareCommunity.Controllers
         // GET: ElderlyResidents/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.ElderlyResident == null)
+            if (id == null || _context.ElderlyResidents == null)
             {
                 return NotFound();
             }
 
-            var elderlyResident = await _context.ElderlyResident
+            var elderlyResident = await _context.ElderlyResidents
                 .FirstOrDefaultAsync(m => m.ResidentID == id);
             if (elderlyResident == null)
             {
@@ -141,14 +192,14 @@ namespace EverCareCommunity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.ElderlyResident == null)
+            if (_context.ElderlyResidents == null)
             {
-                return Problem("Entity set 'EverCareCommunityContext.ElderlyResident'  is null.");
+                return Problem("Entity set 'EverCareCommunityContext.ElderlyResidents'  is null.");
             }
-            var elderlyResident = await _context.ElderlyResident.FindAsync(id);
+            var elderlyResident = await _context.ElderlyResidents.FindAsync(id);
             if (elderlyResident != null)
             {
-                _context.ElderlyResident.Remove(elderlyResident);
+                _context.ElderlyResidents.Remove(elderlyResident);
             }
             
             await _context.SaveChangesAsync();
@@ -157,7 +208,7 @@ namespace EverCareCommunity.Controllers
 
         private bool ElderlyResidentExists(int id)
         {
-          return (_context.ElderlyResident?.Any(e => e.ResidentID == id)).GetValueOrDefault();
+          return (_context.ElderlyResidents?.Any(e => e.ResidentID == id)).GetValueOrDefault();
         }
     }
 }

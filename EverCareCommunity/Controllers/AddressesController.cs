@@ -22,20 +22,20 @@ namespace EverCareCommunity.Controllers
         // GET: Addresses
         public async Task<IActionResult> Index()
         {
-              return _context.Address != null ? 
-                          View(await _context.Address.ToListAsync()) :
-                          Problem("Entity set 'EverCareCommunityContext.Address'  is null.");
+            var everCareCommunityContext = _context.Addresses.Include(a => a.ElderlyResident);
+            return View(await everCareCommunityContext.ToListAsync());
         }
 
         // GET: Addresses/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Address == null)
+            if (id == null || _context.Addresses == null)
             {
                 return NotFound();
             }
 
-            var address = await _context.Address
+            var address = await _context.Addresses
+                .Include(a => a.ElderlyResident)
                 .FirstOrDefaultAsync(m => m.AddressID == id);
             if (address == null)
             {
@@ -48,6 +48,7 @@ namespace EverCareCommunity.Controllers
         // GET: Addresses/Create
         public IActionResult Create()
         {
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResidents, "ResidentID", "FirstName");
             return View();
         }
 
@@ -56,7 +57,7 @@ namespace EverCareCommunity.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AddressID,Street,City,ZipCode,Relationship,PhoneNumber")] Address address)
+        public async Task<IActionResult> Create([Bind("AddressID,ResidentID,Street,City,ZipCode,Relationship,PhoneNumber")] Address address)
         {
             if (!ModelState.IsValid)
             {
@@ -64,22 +65,24 @@ namespace EverCareCommunity.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResidents, "ResidentID", "FirstName", address.ResidentID);
             return View(address);
         }
 
         // GET: Addresses/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Address == null)
+            if (id == null || _context.Addresses == null)
             {
                 return NotFound();
             }
 
-            var address = await _context.Address.FindAsync(id);
+            var address = await _context.Addresses.FindAsync(id);
             if (address == null)
             {
                 return NotFound();
             }
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResidents, "ResidentID", "FirstName", address.ResidentID);
             return View(address);
         }
 
@@ -88,7 +91,7 @@ namespace EverCareCommunity.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AddressID,Street,City,ZipCode,Relationship,PhoneNumber")] Address address)
+        public async Task<IActionResult> Edit(int id, [Bind("AddressID,ResidentID,Street,City,ZipCode,Relationship,PhoneNumber")] Address address)
         {
             if (id != address.AddressID)
             {
@@ -115,18 +118,20 @@ namespace EverCareCommunity.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResidents, "ResidentID", "FirstName", address.ResidentID);
             return View(address);
         }
 
         // GET: Addresses/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Address == null)
+            if (id == null || _context.Addresses == null)
             {
                 return NotFound();
             }
 
-            var address = await _context.Address
+            var address = await _context.Addresses
+                .Include(a => a.ElderlyResident)
                 .FirstOrDefaultAsync(m => m.AddressID == id);
             if (address == null)
             {
@@ -141,14 +146,14 @@ namespace EverCareCommunity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Address == null)
+            if (_context.Addresses == null)
             {
-                return Problem("Entity set 'EverCareCommunityContext.Address'  is null.");
+                return Problem("Entity set 'EverCareCommunityContext.Addresses'  is null.");
             }
-            var address = await _context.Address.FindAsync(id);
+            var address = await _context.Addresses.FindAsync(id);
             if (address != null)
             {
-                _context.Address.Remove(address);
+                _context.Addresses.Remove(address);
             }
             
             await _context.SaveChangesAsync();
@@ -157,7 +162,7 @@ namespace EverCareCommunity.Controllers
 
         private bool AddressExists(int id)
         {
-          return (_context.Address?.Any(e => e.AddressID == id)).GetValueOrDefault();
+          return (_context.Addresses?.Any(e => e.AddressID == id)).GetValueOrDefault();
         }
     }
 }

@@ -22,19 +22,19 @@ namespace EverCareCommunity.Controllers
         // GET: Appointments
         public async Task<IActionResult> Index()
         {
-            var everCareCommunityContext = _context.Appointment.Include(a => a.Doctor).Include(a => a.ElderlyResident);
+            var everCareCommunityContext = _context.Appointments.Include(a => a.Doctor).Include(a => a.ElderlyResident);
             return View(await everCareCommunityContext.ToListAsync());
         }
 
         // GET: Appointments/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Appointment == null)
+            if (id == null || _context.Appointments == null)
             {
                 return NotFound();
             }
 
-            var appointment = await _context.Appointment
+            var appointment = await _context.Appointments
                 .Include(a => a.Doctor)
                 .Include(a => a.ElderlyResident)
                 .FirstOrDefaultAsync(m => m.AppointmentID == id);
@@ -49,8 +49,8 @@ namespace EverCareCommunity.Controllers
         // GET: Appointments/Create
         public IActionResult Create()
         {
-            ViewData["DoctorID"] = new SelectList(_context.Doctor, "DoctorID", "LicenseNumber");
-            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "FirstName");
+            ViewData["DoctorID"] = new SelectList(_context.Doctors, "DoctorID", "FirstName");
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResidents, "ResidentID", "FirstName");
             return View();
         }
 
@@ -59,7 +59,7 @@ namespace EverCareCommunity.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AppointmentID,ResidentID,DoctorID,DateTime,Status")] Appointment appointment)
+        public async Task<IActionResult> Create([Bind("AppointmentID,ResidentID,DoctorID,Status,DateTime")] Appointment appointment)
         {
             if (!ModelState.IsValid)
             {
@@ -67,26 +67,26 @@ namespace EverCareCommunity.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DoctorID"] = new SelectList(_context.Doctor, "DoctorID", "LicenseNumber", appointment.DoctorID);
-            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "FirstName", appointment.ResidentID);
+            ViewData["DoctorID"] = new SelectList(_context.Doctors, "DoctorID", "FirstName", appointment.DoctorID);
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResidents, "ResidentID", "FirstName", appointment.ResidentID);
             return View(appointment);
         }
 
         // GET: Appointments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Appointment == null)
+            if (id == null || _context.Appointments == null)
             {
                 return NotFound();
             }
 
-            var appointment = await _context.Appointment.FindAsync(id);
+            var appointment = await _context.Appointments.FindAsync(id);
             if (appointment == null)
             {
                 return NotFound();
             }
-            ViewData["DoctorID"] = new SelectList(_context.Doctor, "DoctorID", "LicenseNumber", appointment.DoctorID);
-            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "FirstName", appointment.ResidentID);
+            ViewData["DoctorID"] = new SelectList(_context.Doctors, "DoctorID", "FirstName", appointment.DoctorID);
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResidents, "ResidentID", "FirstName", appointment.ResidentID);
             return View(appointment);
         }
 
@@ -95,7 +95,7 @@ namespace EverCareCommunity.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AppointmentID,ResidentID,DoctorID,DateTime,Status")] Appointment appointment)
+        public async Task<IActionResult> Edit(int id, [Bind("AppointmentID,ResidentID,DoctorID,Status,DateTime")] Appointment appointment)
         {
             if (id != appointment.AppointmentID)
             {
@@ -122,20 +122,20 @@ namespace EverCareCommunity.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DoctorID"] = new SelectList(_context.Doctor, "DoctorID", "LicenseNumber", appointment.DoctorID);
-            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "FirstName", appointment.ResidentID);
+            ViewData["DoctorID"] = new SelectList(_context.Doctors, "DoctorID", "FirstName", appointment.DoctorID);
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResidents, "ResidentID", "FirstName", appointment.ResidentID);
             return View(appointment);
         }
 
         // GET: Appointments/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Appointment == null)
+            if (id == null || _context.Appointments == null)
             {
                 return NotFound();
             }
 
-            var appointment = await _context.Appointment
+            var appointment = await _context.Appointments
                 .Include(a => a.Doctor)
                 .Include(a => a.ElderlyResident)
                 .FirstOrDefaultAsync(m => m.AppointmentID == id);
@@ -152,14 +152,14 @@ namespace EverCareCommunity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Appointment == null)
+            if (_context.Appointments == null)
             {
-                return Problem("Entity set 'EverCareCommunityContext.Appointment'  is null.");
+                return Problem("Entity set 'EverCareCommunityContext.Appointments'  is null.");
             }
-            var appointment = await _context.Appointment.FindAsync(id);
+            var appointment = await _context.Appointments.FindAsync(id);
             if (appointment != null)
             {
-                _context.Appointment.Remove(appointment);
+                _context.Appointments.Remove(appointment);
             }
             
             await _context.SaveChangesAsync();
@@ -168,7 +168,7 @@ namespace EverCareCommunity.Controllers
 
         private bool AppointmentExists(int id)
         {
-          return (_context.Appointment?.Any(e => e.AppointmentID == id)).GetValueOrDefault();
+          return (_context.Appointments?.Any(e => e.AppointmentID == id)).GetValueOrDefault();
         }
     }
 }

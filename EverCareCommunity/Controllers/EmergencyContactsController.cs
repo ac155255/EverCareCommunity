@@ -22,19 +22,19 @@ namespace EverCareCommunity.Controllers
         // GET: EmergencyContacts
         public async Task<IActionResult> Index()
         {
-            var everCareCommunityContext = _context.EmergencyContact.Include(e => e.Address).Include(e => e.ElderlyResident);
+            var everCareCommunityContext = _context.EmergencyContacts.Include(e => e.Address).Include(e => e.ElderlyResident);
             return View(await everCareCommunityContext.ToListAsync());
         }
 
         // GET: EmergencyContacts/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.EmergencyContact == null)
+            if (id == null || _context.EmergencyContacts == null)
             {
                 return NotFound();
             }
 
-            var emergencyContact = await _context.EmergencyContact
+            var emergencyContact = await _context.EmergencyContacts
                 .Include(e => e.Address)
                 .Include(e => e.ElderlyResident)
                 .FirstOrDefaultAsync(m => m.EmergencyContactID == id);
@@ -49,8 +49,8 @@ namespace EverCareCommunity.Controllers
         // GET: EmergencyContacts/Create
         public IActionResult Create()
         {
-            ViewData["AddressID"] = new SelectList(_context.Address, "AddressID", "Street");
-            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "FirstName");
+            ViewData["AddressID"] = new SelectList(_context.Addresses, "AddressID", "City");
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResidents, "ResidentID", "FirstName");
             return View();
         }
 
@@ -59,7 +59,7 @@ namespace EverCareCommunity.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EmergencyContactID,ResidentID,AddressID,FirstName,LastName,PhoneNumber,Relationship")] EmergencyContact emergencyContact)
+        public async Task<IActionResult> Create([Bind("EmergencyContactID,ResidentID,AddressID,FirstName,LastName,Relationship,PhoneNumber")] EmergencyContact emergencyContact)
         {
             if (!ModelState.IsValid)
             {
@@ -67,26 +67,26 @@ namespace EverCareCommunity.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AddressID"] = new SelectList(_context.Address, "AddressID", "Street", emergencyContact.AddressID);
-            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "FirstName", emergencyContact.ResidentID);
+            ViewData["AddressID"] = new SelectList(_context.Addresses, "AddressID", "City", emergencyContact.AddressID);
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResidents, "ResidentID", "FirstName", emergencyContact.ResidentID);
             return View(emergencyContact);
         }
 
         // GET: EmergencyContacts/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.EmergencyContact == null)
+            if (id == null || _context.EmergencyContacts == null)
             {
                 return NotFound();
             }
 
-            var emergencyContact = await _context.EmergencyContact.FindAsync(id);
+            var emergencyContact = await _context.EmergencyContacts.FindAsync(id);
             if (emergencyContact == null)
             {
                 return NotFound();
             }
-            ViewData["AddressID"] = new SelectList(_context.Address, "AddressID", "Street", emergencyContact.AddressID);
-            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "FirstName", emergencyContact.ResidentID);
+            ViewData["AddressID"] = new SelectList(_context.Addresses, "AddressID", "City", emergencyContact.AddressID);
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResidents, "ResidentID", "FirstName", emergencyContact.ResidentID);
             return View(emergencyContact);
         }
 
@@ -95,7 +95,7 @@ namespace EverCareCommunity.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EmergencyContactID,ResidentID,AddressID,FirstName,LastName,PhoneNumber,Relationship")] EmergencyContact emergencyContact)
+        public async Task<IActionResult> Edit(int id, [Bind("EmergencyContactID,ResidentID,AddressID,FirstName,LastName,Relationship,PhoneNumber")] EmergencyContact emergencyContact)
         {
             if (id != emergencyContact.EmergencyContactID)
             {
@@ -122,20 +122,20 @@ namespace EverCareCommunity.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AddressID"] = new SelectList(_context.Address, "AddressID", "Street", emergencyContact.AddressID);
-            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "FirstName", emergencyContact.ResidentID);
+            ViewData["AddressID"] = new SelectList(_context.Addresses, "AddressID", "City", emergencyContact.AddressID);
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResidents, "ResidentID", "FirstName", emergencyContact.ResidentID);
             return View(emergencyContact);
         }
 
         // GET: EmergencyContacts/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.EmergencyContact == null)
+            if (id == null || _context.EmergencyContacts == null)
             {
                 return NotFound();
             }
 
-            var emergencyContact = await _context.EmergencyContact
+            var emergencyContact = await _context.EmergencyContacts
                 .Include(e => e.Address)
                 .Include(e => e.ElderlyResident)
                 .FirstOrDefaultAsync(m => m.EmergencyContactID == id);
@@ -152,14 +152,14 @@ namespace EverCareCommunity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.EmergencyContact == null)
+            if (_context.EmergencyContacts == null)
             {
-                return Problem("Entity set 'EverCareCommunityContext.EmergencyContact'  is null.");
+                return Problem("Entity set 'EverCareCommunityContext.EmergencyContacts'  is null.");
             }
-            var emergencyContact = await _context.EmergencyContact.FindAsync(id);
+            var emergencyContact = await _context.EmergencyContacts.FindAsync(id);
             if (emergencyContact != null)
             {
-                _context.EmergencyContact.Remove(emergencyContact);
+                _context.EmergencyContacts.Remove(emergencyContact);
             }
             
             await _context.SaveChangesAsync();
@@ -168,7 +168,7 @@ namespace EverCareCommunity.Controllers
 
         private bool EmergencyContactExists(int id)
         {
-          return (_context.EmergencyContact?.Any(e => e.EmergencyContactID == id)).GetValueOrDefault();
+          return (_context.EmergencyContacts?.Any(e => e.EmergencyContactID == id)).GetValueOrDefault();
         }
     }
 }

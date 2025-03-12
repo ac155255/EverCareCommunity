@@ -1,10 +1,14 @@
 ﻿namespace EverCareCommunity.Models;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 public class Address
 {
     [Key]
     public int AddressID { get; set; }
+
+    [ForeignKey("ElderlyResident")]
+    public int ResidentID { get; set; }
 
     [Required(ErrorMessage = "Street address is required.")]
     [StringLength(100, ErrorMessage = "Street address must not exceed 100 characters.")]

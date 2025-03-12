@@ -22,20 +22,20 @@ namespace EverCareCommunity.Controllers
         // GET: Doctors
         public async Task<IActionResult> Index()
         {
-              return _context.Doctor != null ? 
-                          View(await _context.Doctor.ToListAsync()) :
-                          Problem("Entity set 'EverCareCommunityContext.Doctor'  is null.");
+              return _context.Doctors != null ? 
+                          View(await _context.Doctors.ToListAsync()) :
+                          Problem("Entity set 'EverCareCommunityContext.Doctors'  is null.");
         }
 
         // GET: Doctors/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Doctor == null)
+            if (id == null || _context.Doctors == null)
             {
                 return NotFound();
             }
 
-            var doctor = await _context.Doctor
+            var doctor = await _context.Doctors
                 .FirstOrDefaultAsync(m => m.DoctorID == id);
             if (doctor == null)
             {
@@ -58,7 +58,7 @@ namespace EverCareCommunity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DoctorID,FirstName,LastName,Email,LicenseNumber,PhoneNumber,Availability")] Doctor doctor)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 _context.Add(doctor);
                 await _context.SaveChangesAsync();
@@ -70,12 +70,12 @@ namespace EverCareCommunity.Controllers
         // GET: Doctors/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Doctor == null)
+            if (id == null || _context.Doctors == null)
             {
                 return NotFound();
             }
 
-            var doctor = await _context.Doctor.FindAsync(id);
+            var doctor = await _context.Doctors.FindAsync(id);
             if (doctor == null)
             {
                 return NotFound();
@@ -121,12 +121,12 @@ namespace EverCareCommunity.Controllers
         // GET: Doctors/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Doctor == null)
+            if (id == null || _context.Doctors == null)
             {
                 return NotFound();
             }
 
-            var doctor = await _context.Doctor
+            var doctor = await _context.Doctors
                 .FirstOrDefaultAsync(m => m.DoctorID == id);
             if (doctor == null)
             {
@@ -141,14 +141,14 @@ namespace EverCareCommunity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Doctor == null)
+            if (_context.Doctors == null)
             {
-                return Problem("Entity set 'EverCareCommunityContext.Doctor'  is null.");
+                return Problem("Entity set 'EverCareCommunityContext.Doctors'  is null.");
             }
-            var doctor = await _context.Doctor.FindAsync(id);
+            var doctor = await _context.Doctors.FindAsync(id);
             if (doctor != null)
             {
-                _context.Doctor.Remove(doctor);
+                _context.Doctors.Remove(doctor);
             }
             
             await _context.SaveChangesAsync();
@@ -157,7 +157,7 @@ namespace EverCareCommunity.Controllers
 
         private bool DoctorExists(int id)
         {
-          return (_context.Doctor?.Any(e => e.DoctorID == id)).GetValueOrDefault();
+          return (_context.Doctors?.Any(e => e.DoctorID == id)).GetValueOrDefault();
         }
     }
 }

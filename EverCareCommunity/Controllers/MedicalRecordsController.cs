@@ -22,19 +22,19 @@ namespace EverCareCommunity.Controllers
         // GET: MedicalRecords
         public async Task<IActionResult> Index()
         {
-            var everCareCommunityContext = _context.MedicalRecord.Include(m => m.Doctor).Include(m => m.ElderlyResident);
+            var everCareCommunityContext = _context.MedicalRecords.Include(m => m.Doctor).Include(m => m.ElderlyResident);
             return View(await everCareCommunityContext.ToListAsync());
         }
 
         // GET: MedicalRecords/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.MedicalRecord == null)
+            if (id == null || _context.MedicalRecords == null)
             {
                 return NotFound();
             }
 
-            var medicalRecord = await _context.MedicalRecord
+            var medicalRecord = await _context.MedicalRecords
                 .Include(m => m.Doctor)
                 .Include(m => m.ElderlyResident)
                 .FirstOrDefaultAsync(m => m.RecordID == id);
@@ -49,8 +49,8 @@ namespace EverCareCommunity.Controllers
         // GET: MedicalRecords/Create
         public IActionResult Create()
         {
-            ViewData["DoctorID"] = new SelectList(_context.Doctor, "DoctorID", "LicenseNumber");
-            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "FirstName");
+            ViewData["DoctorID"] = new SelectList(_context.Doctors, "DoctorID", "FirstName");
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResidents, "ResidentID", "FirstName");
             return View();
         }
 
@@ -67,26 +67,26 @@ namespace EverCareCommunity.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DoctorID"] = new SelectList(_context.Doctor, "DoctorID", "LicenseNumber", medicalRecord.DoctorID);
-            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "FirstName", medicalRecord.ResidentID);
+            ViewData["DoctorID"] = new SelectList(_context.Doctors, "DoctorID", "FirstName", medicalRecord.DoctorID);
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResidents, "ResidentID", "FirstName", medicalRecord.ResidentID);
             return View(medicalRecord);
         }
 
         // GET: MedicalRecords/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.MedicalRecord == null)
+            if (id == null || _context.MedicalRecords == null)
             {
                 return NotFound();
             }
 
-            var medicalRecord = await _context.MedicalRecord.FindAsync(id);
+            var medicalRecord = await _context.MedicalRecords.FindAsync(id);
             if (medicalRecord == null)
             {
                 return NotFound();
             }
-            ViewData["DoctorID"] = new SelectList(_context.Doctor, "DoctorID", "LicenseNumber", medicalRecord.DoctorID);
-            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "FirstName", medicalRecord.ResidentID);
+            ViewData["DoctorID"] = new SelectList(_context.Doctors, "DoctorID", "FirstName", medicalRecord.DoctorID);
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResidents, "ResidentID", "FirstName", medicalRecord.ResidentID);
             return View(medicalRecord);
         }
 
@@ -122,20 +122,20 @@ namespace EverCareCommunity.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DoctorID"] = new SelectList(_context.Doctor, "DoctorID", "LicenseNumber", medicalRecord.DoctorID);
-            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "FirstName", medicalRecord.ResidentID);
+            ViewData["DoctorID"] = new SelectList(_context.Doctors, "DoctorID", "FirstName", medicalRecord.DoctorID);
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResidents, "ResidentID", "FirstName", medicalRecord.ResidentID);
             return View(medicalRecord);
         }
 
         // GET: MedicalRecords/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.MedicalRecord == null)
+            if (id == null || _context.MedicalRecords == null)
             {
                 return NotFound();
             }
 
-            var medicalRecord = await _context.MedicalRecord
+            var medicalRecord = await _context.MedicalRecords
                 .Include(m => m.Doctor)
                 .Include(m => m.ElderlyResident)
                 .FirstOrDefaultAsync(m => m.RecordID == id);
@@ -152,14 +152,14 @@ namespace EverCareCommunity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.MedicalRecord == null)
+            if (_context.MedicalRecords == null)
             {
-                return Problem("Entity set 'EverCareCommunityContext.MedicalRecord'  is null.");
+                return Problem("Entity set 'EverCareCommunityContext.MedicalRecords'  is null.");
             }
-            var medicalRecord = await _context.MedicalRecord.FindAsync(id);
+            var medicalRecord = await _context.MedicalRecords.FindAsync(id);
             if (medicalRecord != null)
             {
-                _context.MedicalRecord.Remove(medicalRecord);
+                _context.MedicalRecords.Remove(medicalRecord);
             }
             
             await _context.SaveChangesAsync();
@@ -168,7 +168,7 @@ namespace EverCareCommunity.Controllers
 
         private bool MedicalRecordExists(int id)
         {
-          return (_context.MedicalRecord?.Any(e => e.RecordID == id)).GetValueOrDefault();
+          return (_context.MedicalRecords?.Any(e => e.RecordID == id)).GetValueOrDefault();
         }
     }
 }

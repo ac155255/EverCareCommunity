@@ -22,19 +22,19 @@ namespace EverCareCommunity.Controllers
         // GET: CaregiverResidentAssignments
         public async Task<IActionResult> Index()
         {
-            var everCareCommunityContext = _context.CaregiverResidentAssignment.Include(c => c.Caregiver).Include(c => c.ElderlyResident);
+            var everCareCommunityContext = _context.CaregiverResidentAssignments.Include(c => c.Caregiver).Include(c => c.ElderlyResident);
             return View(await everCareCommunityContext.ToListAsync());
         }
 
         // GET: CaregiverResidentAssignments/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.CaregiverResidentAssignment == null)
+            if (id == null || _context.CaregiverResidentAssignments == null)
             {
                 return NotFound();
             }
 
-            var caregiverResidentAssignment = await _context.CaregiverResidentAssignment
+            var caregiverResidentAssignment = await _context.CaregiverResidentAssignments
                 .Include(c => c.Caregiver)
                 .Include(c => c.ElderlyResident)
                 .FirstOrDefaultAsync(m => m.AssignmentID == id);
@@ -49,8 +49,8 @@ namespace EverCareCommunity.Controllers
         // GET: CaregiverResidentAssignments/Create
         public IActionResult Create()
         {
-            ViewData["CaregiverID"] = new SelectList(_context.Caregiver, "CaregiverID", "Qualification");
-            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "FirstName");
+            ViewData["CaregiverID"] = new SelectList(_context.Caregivers, "CaregiverID", "FirstName");
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResidents, "ResidentID", "FirstName");
             return View();
         }
 
@@ -67,26 +67,26 @@ namespace EverCareCommunity.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CaregiverID"] = new SelectList(_context.Caregiver, "CaregiverID", "Qualification", caregiverResidentAssignment.CaregiverID);
-            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "FirstName", caregiverResidentAssignment.ResidentID);
+            ViewData["CaregiverID"] = new SelectList(_context.Caregivers, "CaregiverID", "FirstName", caregiverResidentAssignment.CaregiverID);
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResidents, "ResidentID", "FirstName", caregiverResidentAssignment.ResidentID);
             return View(caregiverResidentAssignment);
         }
 
         // GET: CaregiverResidentAssignments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.CaregiverResidentAssignment == null)
+            if (id == null || _context.CaregiverResidentAssignments == null)
             {
                 return NotFound();
             }
 
-            var caregiverResidentAssignment = await _context.CaregiverResidentAssignment.FindAsync(id);
+            var caregiverResidentAssignment = await _context.CaregiverResidentAssignments.FindAsync(id);
             if (caregiverResidentAssignment == null)
             {
                 return NotFound();
             }
-            ViewData["CaregiverID"] = new SelectList(_context.Caregiver, "CaregiverID", "Qualification", caregiverResidentAssignment.CaregiverID);
-            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "FirstName", caregiverResidentAssignment.ResidentID);
+            ViewData["CaregiverID"] = new SelectList(_context.Caregivers, "CaregiverID", "FirstName", caregiverResidentAssignment.CaregiverID);
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResidents, "ResidentID", "FirstName", caregiverResidentAssignment.ResidentID);
             return View(caregiverResidentAssignment);
         }
 
@@ -122,20 +122,20 @@ namespace EverCareCommunity.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CaregiverID"] = new SelectList(_context.Caregiver, "CaregiverID", "Qualification", caregiverResidentAssignment.CaregiverID);
-            ViewData["ResidentID"] = new SelectList(_context.ElderlyResident, "ResidentID", "FirstName", caregiverResidentAssignment.ResidentID);
+            ViewData["CaregiverID"] = new SelectList(_context.Caregivers, "CaregiverID", "FirstName", caregiverResidentAssignment.CaregiverID);
+            ViewData["ResidentID"] = new SelectList(_context.ElderlyResidents, "ResidentID", "FirstName", caregiverResidentAssignment.ResidentID);
             return View(caregiverResidentAssignment);
         }
 
         // GET: CaregiverResidentAssignments/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.CaregiverResidentAssignment == null)
+            if (id == null || _context.CaregiverResidentAssignments == null)
             {
                 return NotFound();
             }
 
-            var caregiverResidentAssignment = await _context.CaregiverResidentAssignment
+            var caregiverResidentAssignment = await _context.CaregiverResidentAssignments
                 .Include(c => c.Caregiver)
                 .Include(c => c.ElderlyResident)
                 .FirstOrDefaultAsync(m => m.AssignmentID == id);
@@ -152,14 +152,14 @@ namespace EverCareCommunity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.CaregiverResidentAssignment == null)
+            if (_context.CaregiverResidentAssignments == null)
             {
-                return Problem("Entity set 'EverCareCommunityContext.CaregiverResidentAssignment'  is null.");
+                return Problem("Entity set 'EverCareCommunityContext.CaregiverResidentAssignments'  is null.");
             }
-            var caregiverResidentAssignment = await _context.CaregiverResidentAssignment.FindAsync(id);
+            var caregiverResidentAssignment = await _context.CaregiverResidentAssignments.FindAsync(id);
             if (caregiverResidentAssignment != null)
             {
-                _context.CaregiverResidentAssignment.Remove(caregiverResidentAssignment);
+                _context.CaregiverResidentAssignments.Remove(caregiverResidentAssignment);
             }
             
             await _context.SaveChangesAsync();
@@ -168,7 +168,7 @@ namespace EverCareCommunity.Controllers
 
         private bool CaregiverResidentAssignmentExists(int id)
         {
-          return (_context.CaregiverResidentAssignment?.Any(e => e.AssignmentID == id)).GetValueOrDefault();
+          return (_context.CaregiverResidentAssignments?.Any(e => e.AssignmentID == id)).GetValueOrDefault();
         }
     }
 }

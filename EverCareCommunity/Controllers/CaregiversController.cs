@@ -22,20 +22,20 @@ namespace EverCareCommunity.Controllers
         // GET: Caregivers
         public async Task<IActionResult> Index()
         {
-              return _context.Caregiver != null ? 
-                          View(await _context.Caregiver.ToListAsync()) :
-                          Problem("Entity set 'EverCareCommunityContext.Caregiver'  is null.");
+              return _context.Caregivers != null ? 
+                          View(await _context.Caregivers.ToListAsync()) :
+                          Problem("Entity set 'EverCareCommunityContext.Caregivers'  is null.");
         }
 
         // GET: Caregivers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Caregiver == null)
+            if (id == null || _context.Caregivers == null)
             {
                 return NotFound();
             }
 
-            var caregiver = await _context.Caregiver
+            var caregiver = await _context.Caregivers
                 .FirstOrDefaultAsync(m => m.CaregiverID == id);
             if (caregiver == null)
             {
@@ -56,9 +56,9 @@ namespace EverCareCommunity.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CaregiverID,FirstName,LastName,Email,Phone,Qualification,Experience,Availability")] Caregiver caregiver)
+        public async Task<IActionResult> Create([Bind("CaregiverID,FirstName,LastName,QualificationType,Email,Phone,Experience,Availability")] Caregiver caregiver)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 _context.Add(caregiver);
                 await _context.SaveChangesAsync();
@@ -70,12 +70,12 @@ namespace EverCareCommunity.Controllers
         // GET: Caregivers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Caregiver == null)
+            if (id == null || _context.Caregivers == null)
             {
                 return NotFound();
             }
 
-            var caregiver = await _context.Caregiver.FindAsync(id);
+            var caregiver = await _context.Caregivers.FindAsync(id);
             if (caregiver == null)
             {
                 return NotFound();
@@ -88,7 +88,7 @@ namespace EverCareCommunity.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CaregiverID,FirstName,LastName,Email,Phone,Qualification,Experience,Availability")] Caregiver caregiver)
+        public async Task<IActionResult> Edit(int id, [Bind("CaregiverID,FirstName,LastName,QualificationType,Email,Phone,Experience,Availability")] Caregiver caregiver)
         {
             if (id != caregiver.CaregiverID)
             {
@@ -121,12 +121,12 @@ namespace EverCareCommunity.Controllers
         // GET: Caregivers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Caregiver == null)
+            if (id == null || _context.Caregivers == null)
             {
                 return NotFound();
             }
 
-            var caregiver = await _context.Caregiver
+            var caregiver = await _context.Caregivers
                 .FirstOrDefaultAsync(m => m.CaregiverID == id);
             if (caregiver == null)
             {
@@ -141,14 +141,14 @@ namespace EverCareCommunity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Caregiver == null)
+            if (_context.Caregivers == null)
             {
-                return Problem("Entity set 'EverCareCommunityContext.Caregiver'  is null.");
+                return Problem("Entity set 'EverCareCommunityContext.Caregivers'  is null.");
             }
-            var caregiver = await _context.Caregiver.FindAsync(id);
+            var caregiver = await _context.Caregivers.FindAsync(id);
             if (caregiver != null)
             {
-                _context.Caregiver.Remove(caregiver);
+                _context.Caregivers.Remove(caregiver);
             }
             
             await _context.SaveChangesAsync();
@@ -157,7 +157,7 @@ namespace EverCareCommunity.Controllers
 
         private bool CaregiverExists(int id)
         {
-          return (_context.Caregiver?.Any(e => e.CaregiverID == id)).GetValueOrDefault();
+          return (_context.Caregivers?.Any(e => e.CaregiverID == id)).GetValueOrDefault();
         }
     }
 }

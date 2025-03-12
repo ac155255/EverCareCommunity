@@ -4,20 +4,19 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-
-
 public enum GenderType
 {
     Male,
     Female,
     Other
 }
+
 public class ElderlyResident
 {
     [Key]
     public int ResidentID { get; set; }
 
-    [ Required(ErrorMessage = "First name is required.")]
+    [Required(ErrorMessage = "First name is required.")]
     [StringLength(50, MinimumLength = 2, ErrorMessage = "First name must be between 2 and 50 characters.")]
     [RegularExpression(@"^[A-Za-z\s'-]+$", ErrorMessage = "First name can only contain letters, spaces, hyphens, and apostrophes.")]
     public string FirstName { get; set; }
@@ -37,16 +36,25 @@ public class ElderlyResident
     [RegularExpression(@"^\+?[0-9\s-]+$", ErrorMessage = "Phone number can only contain digits, spaces, dashes, and an optional leading +.")]
     public string PhoneNumber { get; set; }
 
-   
-    public GenderType Gender{ get; set; }
+    public GenderType Gender { get; set; }
 
-    [Required(ErrorMessage = "Date of birth is required.")]
+    
     [DataType(DataType.Date)]
     [CustomValidation(typeof(ElderlyResident), nameof(ValidateDateOfBirth))]
-    public DateTime DateOfBirth { get; set; }
+    public DateTime? DateOfBirth { get; set; } // Allow nullable
 
-    public static ValidationResult ValidateDateOfBirth(DateTime date, ValidationContext context)
+    public static ValidationResult ValidateDateOfBirth(object value, ValidationContext context)
     {
+        if (value == null)
+        {
+            return new ValidationResult("Date of birth is required.");
+        }
+
+        if (!(value is DateTime date))
+        {
+            return new ValidationResult("Invalid date format.");
+        }
+
         int minAge = 18;
         int maxAge = 100;
         DateTime today = DateTime.Today;
@@ -61,14 +69,12 @@ public class ElderlyResident
         {
             return new ValidationResult($"Age cannot exceed {maxAge} years.");
         }
+
         return ValidationResult.Success;
     }
-   
 
     [MaxLength(255)]
-        public string Address { get; set; }
-
-    
+    public string Address { get; set; }
 
     public ICollection<MedicalCondition> MedicalConditions { get; set; } = new List<MedicalCondition>();
     public ICollection<MedicalRecord> MedicalRecords { get; set; } = new List<MedicalRecord>();
@@ -78,10 +84,5 @@ public class ElderlyResident
 
     public ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
     public ICollection<CaregiverResidentAssignment> CaregiverAssignments { get; set; } = new List<CaregiverResidentAssignment>();
-
-
+    public ICollection<Address> Addresses { get; set; }
 }
-
-
-
-
