@@ -20,15 +20,60 @@ namespace EverCareCommunity.Controllers
         }
 
         // GET: Doctors
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+     string sortOrder,
+     string currentFilter,
+     string searchString,
+     int? pageNumber)
         {
-              return _context.Doctors != null ? 
-                          View(await _context.Doctors.ToListAsync()) :
-                          Problem("Entity set 'EverCareCommunityContext.Doctors'  is null.");
-        }
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
 
-        // GET: Doctors/Details/5
-        public async Task<IActionResult> Details(int? id)
+
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var doctors = _context.Doctors
+                .Select(s => new Doctor
+                {
+                    DoctorID = s.DoctorID,
+                    FirstName = s.FirstName,
+                    LastName = s.LastName,
+                    Email = s.Email,
+                    PhoneNumber = s.PhoneNumber,
+                    LicenseNumber = s.LicenseNumber,
+                    Availability = s.Availability,
+                });
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                doctors = doctors.Where(s => s.FirstName.Contains(searchString) || s.LastName.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    doctors = doctors.OrderByDescending(s => s.FirstName);
+                    break;
+                case "Date":
+                    doctors = doctors.OrderBy(s => s.FirstName);
+                    break;
+            }
+
+            int pageSize = 3;
+            return View(await PaginatedList<Doctor>.CreateAsync(doctors.AsNoTracking(), pageNumber ?? 1, pageSize));
+        }
+            // GET: Doctors/Details/5
+            public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Doctors == null)
             {
@@ -58,7 +103,7 @@ namespace EverCareCommunity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DoctorID,FirstName,LastName,Email,LicenseNumber,PhoneNumber,Availability")] Doctor doctor)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 _context.Add(doctor);
                 await _context.SaveChangesAsync();
@@ -95,7 +140,7 @@ namespace EverCareCommunity.Controllers
                 return NotFound();
             }
 
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
