@@ -20,11 +20,58 @@ namespace EverCareCommunity.Controllers
         }
 
         // GET: Caregivers
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+     string sortOrder,
+     string currentFilter,
+     string searchString,
+     int? pageNumber)
         {
-              return _context.Caregivers != null ? 
-                          View(await _context.Caregivers.ToListAsync()) :
-                          Problem("Entity set 'EverCareCommunityContext.Caregivers'  is null.");
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+
+
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var caregivers = _context.Caregivers
+                .Select(s => new Caregiver
+                {
+                    CaregiverID = s.CaregiverID,
+                    FirstName = s.FirstName,
+                    LastName = s.LastName,
+                    Email = s.Email,
+                    QualificationType = s.QualificationType,
+                    Phone = s.Phone,
+                    Availability = s.Availability,
+                    Experience = s.Experience,
+                });
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                caregivers = caregivers.Where(s => s.FirstName.Contains(searchString) || s.LastName.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    caregivers = caregivers.OrderByDescending(s => s.FirstName);
+                    break;
+                case "Date":
+                    caregivers = caregivers.OrderBy(s => s.FirstName);
+                    break;
+            }
+
+            int pageSize = 3;
+            return View(await PaginatedList<Caregiver>.CreateAsync(caregivers.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Caregivers/Details/5
