@@ -4,6 +4,7 @@ using EverCareCommunity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EverCareCommunity.Migrations
 {
     [DbContext(typeof(EverCareCommunityContext))]
-    partial class EverCareCommunityContextModelSnapshot : ModelSnapshot
+    [Migration("20250320014439_emegencycontactandaddressdata")]
+    partial class emegencycontactandaddressdata
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -222,7 +225,7 @@ namespace EverCareCommunity.Migrations
                         new
                         {
                             AppointmentID = 1,
-                            DateTime = new DateTime(2025, 3, 27, 15, 1, 21, 947, DateTimeKind.Local).AddTicks(4643),
+                            DateTime = new DateTime(2025, 3, 27, 14, 44, 39, 59, DateTimeKind.Local).AddTicks(7742),
                             DoctorID = 1,
                             ResidentID = 11,
                             Status = 0
@@ -230,7 +233,7 @@ namespace EverCareCommunity.Migrations
                         new
                         {
                             AppointmentID = 2,
-                            DateTime = new DateTime(2025, 3, 6, 15, 1, 21, 947, DateTimeKind.Local).AddTicks(4710),
+                            DateTime = new DateTime(2025, 3, 6, 14, 44, 39, 59, DateTimeKind.Local).AddTicks(7849),
                             DoctorID = 2,
                             ResidentID = 12,
                             Status = 1
@@ -238,7 +241,7 @@ namespace EverCareCommunity.Migrations
                         new
                         {
                             AppointmentID = 3,
-                            DateTime = new DateTime(2025, 3, 30, 15, 1, 21, 947, DateTimeKind.Local).AddTicks(4715),
+                            DateTime = new DateTime(2025, 3, 30, 14, 44, 39, 59, DateTimeKind.Local).AddTicks(7855),
                             DoctorID = 3,
                             ResidentID = 13,
                             Status = 0
@@ -246,7 +249,7 @@ namespace EverCareCommunity.Migrations
                         new
                         {
                             AppointmentID = 4,
-                            DateTime = new DateTime(2025, 3, 15, 15, 1, 21, 947, DateTimeKind.Local).AddTicks(4718),
+                            DateTime = new DateTime(2025, 3, 15, 14, 44, 39, 59, DateTimeKind.Local).AddTicks(7859),
                             DoctorID = 4,
                             ResidentID = 14,
                             Status = 2
@@ -254,7 +257,7 @@ namespace EverCareCommunity.Migrations
                         new
                         {
                             AppointmentID = 5,
-                            DateTime = new DateTime(2025, 3, 23, 15, 1, 21, 947, DateTimeKind.Local).AddTicks(4722),
+                            DateTime = new DateTime(2025, 3, 23, 14, 44, 39, 59, DateTimeKind.Local).AddTicks(7863),
                             DoctorID = 5,
                             ResidentID = 15,
                             Status = 0
@@ -262,7 +265,7 @@ namespace EverCareCommunity.Migrations
                         new
                         {
                             AppointmentID = 6,
-                            DateTime = new DateTime(2025, 2, 28, 15, 1, 21, 947, DateTimeKind.Local).AddTicks(4725),
+                            DateTime = new DateTime(2025, 2, 28, 14, 44, 39, 59, DateTimeKind.Local).AddTicks(7868),
                             DoctorID = 6,
                             ResidentID = 16,
                             Status = 1
@@ -270,7 +273,7 @@ namespace EverCareCommunity.Migrations
                         new
                         {
                             AppointmentID = 7,
-                            DateTime = new DateTime(2025, 4, 4, 15, 1, 21, 947, DateTimeKind.Local).AddTicks(4729),
+                            DateTime = new DateTime(2025, 4, 4, 14, 44, 39, 59, DateTimeKind.Local).AddTicks(7872),
                             DoctorID = 7,
                             ResidentID = 17,
                             Status = 0
@@ -278,7 +281,7 @@ namespace EverCareCommunity.Migrations
                         new
                         {
                             AppointmentID = 8,
-                            DateTime = new DateTime(2025, 3, 21, 15, 1, 21, 947, DateTimeKind.Local).AddTicks(4733),
+                            DateTime = new DateTime(2025, 3, 21, 14, 44, 39, 59, DateTimeKind.Local).AddTicks(7878),
                             DoctorID = 8,
                             ResidentID = 18,
                             Status = 0
@@ -286,7 +289,7 @@ namespace EverCareCommunity.Migrations
                         new
                         {
                             AppointmentID = 9,
-                            DateTime = new DateTime(2025, 3, 18, 15, 1, 21, 947, DateTimeKind.Local).AddTicks(4736),
+                            DateTime = new DateTime(2025, 3, 18, 14, 44, 39, 59, DateTimeKind.Local).AddTicks(7882),
                             DoctorID = 9,
                             ResidentID = 19,
                             Status = 2
@@ -294,7 +297,7 @@ namespace EverCareCommunity.Migrations
                         new
                         {
                             AppointmentID = 10,
-                            DateTime = new DateTime(2025, 2, 18, 15, 1, 21, 947, DateTimeKind.Local).AddTicks(4740),
+                            DateTime = new DateTime(2025, 2, 18, 14, 44, 39, 59, DateTimeKind.Local).AddTicks(7886),
                             DoctorID = 10,
                             ResidentID = 20,
                             Status = 1

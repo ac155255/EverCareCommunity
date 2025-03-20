@@ -248,7 +248,22 @@ public class EverCareCommunityContext : IdentityDbContext<EverCareCommunityUser>
         new CaregiverResidentAssignment { AssignmentID = 4, CaregiverID = 4, ResidentID = 14, Notes = "Memory care support and routine supervision" },
         new CaregiverResidentAssignment { AssignmentID = 5, CaregiverID = 5, ResidentID = 15, Notes = "Diet monitoring and medication reminders" }
         );
-        
+        modelBuilder.Entity<Address>().HasData(
+       new Address { AddressID = 1, ResidentID = 11, Street = "123 Elm Street", City = "Springfield", ZipCode = "12345", Relationship = "Guardian", PhoneNumber = "+1234567890" },
+       new Address { AddressID = 2, ResidentID = 12, Street = "456 Oak Avenue", City = "Rivertown", ZipCode = "23456", Relationship = "Child", PhoneNumber = "+2345678901" },
+       new Address { AddressID = 3, ResidentID = 13, Street = "789 Pine Road", City = "Lakewood", ZipCode = "34567", Relationship = "Spouse", PhoneNumber = "+3456789012" },
+       new Address { AddressID = 4, ResidentID = 14, Street = "101 Maple Lane", City = "Hillview", ZipCode = "45678", Relationship = "Sibling", PhoneNumber = "+4567890123" },
+       new Address { AddressID = 5, ResidentID = 15, Street = "202 Birch Court", City = "Seaside", ZipCode = "56789", Relationship = "Friend", PhoneNumber = "+5678901234" }
+       );
+   
+
+        modelBuilder.Entity<EmergencyContact>().HasData(
+            new EmergencyContact { EmergencyContactID = 1, ResidentID = 11, AddressID = 1, FirstName = "John", LastName = "Doe", Relationship = RelationshipType.Guardian, PhoneNumber = "+1234567890" },
+            new EmergencyContact { EmergencyContactID = 2, ResidentID = 12, AddressID = 2, FirstName = "Emily", LastName = "Smith", Relationship = RelationshipType.Child, PhoneNumber = "+2345678901" },
+            new EmergencyContact { EmergencyContactID = 3, ResidentID = 13, AddressID = 3, FirstName = "Michael", LastName = "Johnson", Relationship = RelationshipType.Spouse, PhoneNumber = "+3456789012" },
+            new EmergencyContact { EmergencyContactID = 4, ResidentID = 14, AddressID = 4, FirstName = "Sarah", LastName = "Williams", Relationship = RelationshipType.Sibling, PhoneNumber = "+4567890123" },
+            new EmergencyContact { EmergencyContactID = 5, ResidentID = 15, AddressID = 5, FirstName = "David", LastName = "Brown", Relationship = RelationshipType.Friend, PhoneNumber = "+5678901234" }
+        );
 
 
 

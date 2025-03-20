@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EverCareCommunity.Data;
 using EverCareCommunity.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EverCareCommunity.Controllers
 {
+    [Authorize]
     public class AppointmentsController : Controller
     {
         private readonly EverCareCommunityContext _context;
