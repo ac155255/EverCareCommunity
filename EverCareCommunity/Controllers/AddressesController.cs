@@ -20,10 +20,50 @@ namespace EverCareCommunity.Controllers
         }
 
         // GET: Addresses
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+      string sortOrder,
+      string currentFilter,
+      string searchString,
+      int? pageNumber)
         {
-            var everCareCommunityContext = _context.Addresses.Include(a => a.ElderlyResident);
-            return View(await everCareCommunityContext.ToListAsync());
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            
+
+
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+            var addresses = _context.Addresses
+           .Include(a => a.ElderlyResident) // Ensure related ElderlyResident is included
+    .AsNoTracking();
+
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                addresses = addresses.Where(s => s.Street.Contains(searchString) || s.Street.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    addresses = addresses.OrderByDescending(s => s.City);
+                    break;
+                case "Date":
+                    addresses = addresses.OrderBy(s => s.City);
+                    break;
+            }
+
+            int pageSize = 3;
+            return View(await PaginatedList<Address>.CreateAsync(addresses.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Addresses/Details/5

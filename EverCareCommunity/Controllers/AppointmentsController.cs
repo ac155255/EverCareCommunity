@@ -20,14 +20,51 @@ namespace EverCareCommunity.Controllers
         }
 
         // GET: Appointments
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, string sortOrder, string currentFilter, int? pageNumber)
         {
-            var everCareCommunityContext = _context.Appointments.Include(a => a.Doctor).Include(a => a.ElderlyResident);
-            return View(await everCareCommunityContext.ToListAsync());
-        }
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+           
 
-        // GET: Appointments/Details/5
-        public async Task<IActionResult> Details(int? id)
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var appointments = _context.Appointments
+                .Include(a => a.Doctor)  
+                .Include(a => a.ElderlyResident) 
+                .AsNoTracking();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                appointments = appointments.Where(a => a.ElderlyResident.FirstName.Contains(searchString)
+                                                    || a.Doctor.FirstName.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    appointments = appointments.OrderByDescending(a => a.ElderlyResident.FirstName);
+                    break;
+                default:
+                    appointments = appointments.OrderBy(a => a.ElderlyResident.FirstName);
+                    break;
+            }
+
+            int pageSize = 5;
+            return View(await PaginatedList<Appointment>.CreateAsync(appointments, pageNumber ?? 1, pageSize));
+        }
+    
+
+    // GET: Appointments/Details/5
+    public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Appointments == null)
             {

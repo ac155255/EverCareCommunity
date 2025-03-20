@@ -1,4 +1,5 @@
-﻿namespace EverCareCommunity.Models;
+﻿
+namespace EverCareCommunity.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -38,7 +39,7 @@ public class ElderlyResident
 
     public GenderType Gender { get; set; }
 
-    
+
     [DataType(DataType.Date)]
     [CustomValidation(typeof(ElderlyResident), nameof(ValidateDateOfBirth))]
     public DateTime? DateOfBirth { get; set; } // Allow nullable

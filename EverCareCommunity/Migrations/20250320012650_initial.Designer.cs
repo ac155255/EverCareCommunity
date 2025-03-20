@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EverCareCommunity.Migrations
 {
     [DbContext(typeof(EverCareCommunityContext))]
-    [Migration("20250310220725_fieldsinloginin")]
-    partial class fieldsinloginin
+    [Migration("20250320012650_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -168,6 +168,88 @@ namespace EverCareCommunity.Migrations
                     b.HasIndex("ResidentID");
 
                     b.ToTable("Appointments");
+
+                    b.HasData(
+                        new
+                        {
+                            AppointmentID = 1,
+                            DateTime = new DateTime(2025, 3, 27, 14, 26, 50, 6, DateTimeKind.Local).AddTicks(4548),
+                            DoctorID = 1,
+                            ResidentID = 11,
+                            Status = 0
+                        },
+                        new
+                        {
+                            AppointmentID = 2,
+                            DateTime = new DateTime(2025, 3, 6, 14, 26, 50, 6, DateTimeKind.Local).AddTicks(4623),
+                            DoctorID = 2,
+                            ResidentID = 12,
+                            Status = 1
+                        },
+                        new
+                        {
+                            AppointmentID = 3,
+                            DateTime = new DateTime(2025, 3, 30, 14, 26, 50, 6, DateTimeKind.Local).AddTicks(4628),
+                            DoctorID = 3,
+                            ResidentID = 13,
+                            Status = 0
+                        },
+                        new
+                        {
+                            AppointmentID = 4,
+                            DateTime = new DateTime(2025, 3, 15, 14, 26, 50, 6, DateTimeKind.Local).AddTicks(4631),
+                            DoctorID = 4,
+                            ResidentID = 14,
+                            Status = 2
+                        },
+                        new
+                        {
+                            AppointmentID = 5,
+                            DateTime = new DateTime(2025, 3, 23, 14, 26, 50, 6, DateTimeKind.Local).AddTicks(4635),
+                            DoctorID = 5,
+                            ResidentID = 15,
+                            Status = 0
+                        },
+                        new
+                        {
+                            AppointmentID = 6,
+                            DateTime = new DateTime(2025, 2, 28, 14, 26, 50, 6, DateTimeKind.Local).AddTicks(4639),
+                            DoctorID = 6,
+                            ResidentID = 16,
+                            Status = 1
+                        },
+                        new
+                        {
+                            AppointmentID = 7,
+                            DateTime = new DateTime(2025, 4, 4, 14, 26, 50, 6, DateTimeKind.Local).AddTicks(4642),
+                            DoctorID = 7,
+                            ResidentID = 17,
+                            Status = 0
+                        },
+                        new
+                        {
+                            AppointmentID = 8,
+                            DateTime = new DateTime(2025, 3, 21, 14, 26, 50, 6, DateTimeKind.Local).AddTicks(4646),
+                            DoctorID = 8,
+                            ResidentID = 18,
+                            Status = 0
+                        },
+                        new
+                        {
+                            AppointmentID = 9,
+                            DateTime = new DateTime(2025, 3, 18, 14, 26, 50, 6, DateTimeKind.Local).AddTicks(4649),
+                            DoctorID = 9,
+                            ResidentID = 19,
+                            Status = 2
+                        },
+                        new
+                        {
+                            AppointmentID = 10,
+                            DateTime = new DateTime(2025, 2, 18, 14, 26, 50, 6, DateTimeKind.Local).AddTicks(4653),
+                            DoctorID = 10,
+                            ResidentID = 20,
+                            Status = 1
+                        });
                 });
 
             modelBuilder.Entity("EverCareCommunity.Models.Caregiver", b =>
@@ -210,6 +292,118 @@ namespace EverCareCommunity.Migrations
                     b.HasKey("CaregiverID");
 
                     b.ToTable("Caregivers");
+
+                    b.HasData(
+                        new
+                        {
+                            CaregiverID = 1,
+                            Availability = true,
+                            Email = "samantha.lewis@example.com",
+                            Experience = 8,
+                            FirstName = "Samantha",
+                            LastName = "Lewis",
+                            Phone = "0218765432",
+                            QualificationType = 0
+                        },
+                        new
+                        {
+                            CaregiverID = 2,
+                            Availability = true,
+                            Email = "daniel.smith@example.com",
+                            Experience = 5,
+                            FirstName = "Daniel",
+                            LastName = "Smith",
+                            Phone = "0298654321",
+                            QualificationType = 1
+                        },
+                        new
+                        {
+                            CaregiverID = 3,
+                            Availability = false,
+                            Email = "aisha.khan@example.com",
+                            Experience = 6,
+                            FirstName = "Aisha",
+                            LastName = "Khan",
+                            Phone = "0276543210",
+                            QualificationType = 2
+                        },
+                        new
+                        {
+                            CaregiverID = 4,
+                            Availability = true,
+                            Email = "michael.jones@example.com",
+                            Experience = 9,
+                            FirstName = "Michael",
+                            LastName = "Jones",
+                            Phone = "0209871234",
+                            QualificationType = 3
+                        },
+                        new
+                        {
+                            CaregiverID = 5,
+                            Availability = false,
+                            Email = "emma.garcia@example.com",
+                            Experience = 7,
+                            FirstName = "Emma",
+                            LastName = "Garcia",
+                            Phone = "0245678901",
+                            QualificationType = 4
+                        },
+                        new
+                        {
+                            CaregiverID = 6,
+                            Availability = true,
+                            Email = "ryan.taylor@example.com",
+                            Experience = 3,
+                            FirstName = "Ryan",
+                            LastName = "Taylor",
+                            Phone = "0256789012",
+                            QualificationType = 0
+                        },
+                        new
+                        {
+                            CaregiverID = 7,
+                            Availability = true,
+                            Email = "sophia.white@example.com",
+                            Experience = 10,
+                            FirstName = "Sophia",
+                            LastName = "White",
+                            Phone = "0287654321",
+                            QualificationType = 1
+                        },
+                        new
+                        {
+                            CaregiverID = 8,
+                            Availability = false,
+                            Email = "ethan.brown@example.com",
+                            Experience = 4,
+                            FirstName = "Ethan",
+                            LastName = "Brown",
+                            Phone = "0223456789",
+                            QualificationType = 2
+                        },
+                        new
+                        {
+                            CaregiverID = 9,
+                            Availability = true,
+                            Email = "olivia.martinez@example.com",
+                            Experience = 2,
+                            FirstName = "Olivia",
+                            LastName = "Martinez",
+                            Phone = "0234567890",
+                            QualificationType = 3
+                        },
+                        new
+                        {
+                            CaregiverID = 10,
+                            Availability = false,
+                            Email = "noah.harris@example.com",
+                            Experience = 11,
+                            FirstName = "Noah",
+                            LastName = "Harris",
+                            Phone = "0212345678",
+                            QualificationType = 4
+                        });
                 });
 
             modelBuilder.Entity("EverCareCommunity.Models.CaregiverResidentAssignment", b =>
@@ -238,6 +432,43 @@ namespace EverCareCommunity.Migrations
                     b.HasIndex("ResidentID");
 
                     b.ToTable("CaregiverResidentAssignments");
+
+                    b.HasData(
+                        new
+                        {
+                            AssignmentID = 1,
+                            CaregiverID = 1,
+                            Notes = "Morning care and medication assistance",
+                            ResidentID = 11
+                        },
+                        new
+                        {
+                            AssignmentID = 2,
+                            CaregiverID = 2,
+                            Notes = "Daily physiotherapy and companionship",
+                            ResidentID = 12
+                        },
+                        new
+                        {
+                            AssignmentID = 3,
+                            CaregiverID = 3,
+                            Notes = "Assistance with mobility and exercise",
+                            ResidentID = 13
+                        },
+                        new
+                        {
+                            AssignmentID = 4,
+                            CaregiverID = 4,
+                            Notes = "Memory care support and routine supervision",
+                            ResidentID = 14
+                        },
+                        new
+                        {
+                            AssignmentID = 5,
+                            CaregiverID = 5,
+                            Notes = "Diet monitoring and medication reminders",
+                            ResidentID = 15
+                        });
                 });
 
             modelBuilder.Entity("EverCareCommunity.Models.Doctor", b =>
@@ -278,6 +509,108 @@ namespace EverCareCommunity.Migrations
                     b.HasKey("DoctorID");
 
                     b.ToTable("Doctors");
+
+                    b.HasData(
+                        new
+                        {
+                            DoctorID = 1,
+                            Availability = true,
+                            Email = "john.miller@example.com",
+                            FirstName = "John",
+                            LastName = "Miller",
+                            LicenseNumber = "D123456",
+                            PhoneNumber = "0211234567"
+                        },
+                        new
+                        {
+                            DoctorID = 2,
+                            Availability = false,
+                            Email = "sarah.adams@example.com",
+                            FirstName = "Sarah",
+                            LastName = "Adams",
+                            LicenseNumber = "D234567",
+                            PhoneNumber = "0223456789"
+                        },
+                        new
+                        {
+                            DoctorID = 3,
+                            Availability = true,
+                            Email = "robert.wilson@example.com",
+                            FirstName = "Robert",
+                            LastName = "Wilson",
+                            LicenseNumber = "D345678",
+                            PhoneNumber = "0234567890"
+                        },
+                        new
+                        {
+                            DoctorID = 4,
+                            Availability = true,
+                            Email = "emily.johnson@example.com",
+                            FirstName = "Emily",
+                            LastName = "Johnson",
+                            LicenseNumber = "D456789",
+                            PhoneNumber = "0245678901"
+                        },
+                        new
+                        {
+                            DoctorID = 5,
+                            Availability = false,
+                            Email = "michael.clark@example.com",
+                            FirstName = "Michael",
+                            LastName = "Clark",
+                            LicenseNumber = "D567890",
+                            PhoneNumber = "0256789012"
+                        },
+                        new
+                        {
+                            DoctorID = 6,
+                            Availability = true,
+                            Email = "jessica.hall@example.com",
+                            FirstName = "Jessica",
+                            LastName = "Hall",
+                            LicenseNumber = "D678901",
+                            PhoneNumber = "0267890123"
+                        },
+                        new
+                        {
+                            DoctorID = 7,
+                            Availability = true,
+                            Email = "daniel.rodriguez@example.com",
+                            FirstName = "Daniel",
+                            LastName = "Rodriguez",
+                            LicenseNumber = "D789012",
+                            PhoneNumber = "0278901234"
+                        },
+                        new
+                        {
+                            DoctorID = 8,
+                            Availability = false,
+                            Email = "laura.davis@example.com",
+                            FirstName = "Laura",
+                            LastName = "Davis",
+                            LicenseNumber = "D890123",
+                            PhoneNumber = "0289012345"
+                        },
+                        new
+                        {
+                            DoctorID = 9,
+                            Availability = true,
+                            Email = "james.lopez@example.com",
+                            FirstName = "James",
+                            LastName = "Lopez",
+                            LicenseNumber = "D901234",
+                            PhoneNumber = "0290123456"
+                        },
+                        new
+                        {
+                            DoctorID = 10,
+                            Availability = false,
+                            Email = "olivia.perez@example.com",
+                            FirstName = "Olivia",
+                            LastName = "Perez",
+                            LicenseNumber = "D012345",
+                            PhoneNumber = "0201234567"
+                        });
                 });
 
             modelBuilder.Entity("EverCareCommunity.Models.ElderlyResident", b =>
@@ -322,6 +655,129 @@ namespace EverCareCommunity.Migrations
                     b.HasKey("ResidentID");
 
                     b.ToTable("ElderlyResidents");
+
+                    b.HasData(
+                        new
+                        {
+                            ResidentID = 10,
+                            Address = "1523 Great South Road",
+                            DateOfBirth = new DateTime(1995, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "trishankj@example.com",
+                            FirstName = "Trishank",
+                            Gender = 2,
+                            LastName = "Jetti",
+                            PhoneNumber = "0224359765"
+                        },
+                        new
+                        {
+                            ResidentID = 11,
+                            Address = "423 Oakwood Avenue",
+                            DateOfBirth = new DateTime(1948, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "amara.patel@example.com",
+                            FirstName = "Amara",
+                            Gender = 1,
+                            LastName = "Patel",
+                            PhoneNumber = "0213456789"
+                        },
+                        new
+                        {
+                            ResidentID = 12,
+                            Address = "182 Pine Hill Road",
+                            DateOfBirth = new DateTime(1955, 7, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "robert.thompson@example.com",
+                            FirstName = "Robert",
+                            Gender = 0,
+                            LastName = "Thompson",
+                            PhoneNumber = "0279876543"
+                        },
+                        new
+                        {
+                            ResidentID = 13,
+                            Address = "1289 Maple Lane",
+                            DateOfBirth = new DateTime(1950, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "linda.fernandez@example.com",
+                            FirstName = "Linda",
+                            Gender = 1,
+                            LastName = "Fernandez",
+                            PhoneNumber = "0204567891"
+                        },
+                        new
+                        {
+                            ResidentID = 14,
+                            Address = "305 Birch Street",
+                            DateOfBirth = new DateTime(1942, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "james.carter@example.com",
+                            FirstName = "James",
+                            Gender = 0,
+                            LastName = "Carter",
+                            PhoneNumber = "0287654321"
+                        },
+                        new
+                        {
+                            ResidentID = 15,
+                            Address = "1364 Sunset Boulevard",
+                            DateOfBirth = new DateTime(1947, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "maria.gonzalez@example.com",
+                            FirstName = "Maria",
+                            Gender = 1,
+                            LastName = "Gonzalez",
+                            PhoneNumber = "0298765432"
+                        },
+                        new
+                        {
+                            ResidentID = 16,
+                            Address = "523 Riverbank Drive",
+                            DateOfBirth = new DateTime(1953, 2, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "william.miller@example.com",
+                            FirstName = "William",
+                            Gender = 2,
+                            LastName = "Miller",
+                            PhoneNumber = "0212345678"
+                        },
+                        new
+                        {
+                            ResidentID = 17,
+                            Address = "6542 Meadow Lane",
+                            DateOfBirth = new DateTime(1959, 11, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "susan.anderson@example.com",
+                            FirstName = "Susan",
+                            Gender = 1,
+                            LastName = "Anderson",
+                            PhoneNumber = "0265432109"
+                        },
+                        new
+                        {
+                            ResidentID = 18,
+                            Address = "196 Cedar Avenue",
+                            DateOfBirth = new DateTime(1944, 4, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "david.wilson@example.com",
+                            FirstName = "David",
+                            Gender = 0,
+                            LastName = "Wilson",
+                            PhoneNumber = "0209871234"
+                        },
+                        new
+                        {
+                            ResidentID = 19,
+                            Address = "9159 Elmwood Drive",
+                            DateOfBirth = new DateTime(1952, 1, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "barbara.taylor@example.com",
+                            FirstName = "Barbara",
+                            Gender = 1,
+                            LastName = "Taylor",
+                            PhoneNumber = "0256789012"
+                        },
+                        new
+                        {
+                            ResidentID = 20,
+                            Address = "172 Greenway Road",
+                            DateOfBirth = new DateTime(1946, 8, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "michael.martinez@example.com",
+                            FirstName = "Michael",
+                            Gender = 2,
+                            LastName = "Martinez",
+                            PhoneNumber = "0245678901"
+                        });
                 });
 
             modelBuilder.Entity("EverCareCommunity.Models.EmergencyContact", b =>
@@ -391,6 +847,78 @@ namespace EverCareCommunity.Migrations
                     b.HasIndex("ResidentID");
 
                     b.ToTable("MedicalConditions");
+
+                    b.HasData(
+                        new
+                        {
+                            ConditionID = 1,
+                            ConditionName = "Hypertension",
+                            Description = "High blood pressure requiring daily medication.",
+                            ResidentID = 11
+                        },
+                        new
+                        {
+                            ConditionID = 2,
+                            ConditionName = "Diabetes",
+                            Description = "Type 2 diabetes managed with insulin.",
+                            ResidentID = 12
+                        },
+                        new
+                        {
+                            ConditionID = 3,
+                            ConditionName = "Arthritis",
+                            Description = "Joint pain and inflammation.",
+                            ResidentID = 13
+                        },
+                        new
+                        {
+                            ConditionID = 4,
+                            ConditionName = "Dementia",
+                            Description = "Memory loss and cognitive decline.",
+                            ResidentID = 14
+                        },
+                        new
+                        {
+                            ConditionID = 5,
+                            ConditionName = "Osteoporosis",
+                            Description = "Weak and brittle bones.",
+                            ResidentID = 15
+                        },
+                        new
+                        {
+                            ConditionID = 6,
+                            ConditionName = "Parkinson's Disease",
+                            Description = "Nerve disorder affecting movement.",
+                            ResidentID = 16
+                        },
+                        new
+                        {
+                            ConditionID = 7,
+                            ConditionName = "Heart Disease",
+                            Description = "Coronary artery disease.",
+                            ResidentID = 17
+                        },
+                        new
+                        {
+                            ConditionID = 8,
+                            ConditionName = "Asthma",
+                            Description = "Chronic lung disease causing breathing difficulties.",
+                            ResidentID = 18
+                        },
+                        new
+                        {
+                            ConditionID = 9,
+                            ConditionName = "Glaucoma",
+                            Description = "Eye condition causing vision loss.",
+                            ResidentID = 19
+                        },
+                        new
+                        {
+                            ConditionID = 10,
+                            ConditionName = "Alzheimer’s",
+                            Description = "Progressive mental deterioration.",
+                            ResidentID = 20
+                        });
                 });
 
             modelBuilder.Entity("EverCareCommunity.Models.MedicalRecord", b =>
@@ -427,6 +955,53 @@ namespace EverCareCommunity.Migrations
                     b.HasIndex("ResidentID");
 
                     b.ToTable("MedicalRecords");
+
+                    b.HasData(
+                        new
+                        {
+                            RecordID = 1,
+                            DateReported = new DateTime(2024, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Diagnosis = "Hypertension",
+                            DoctorID = 1,
+                            Prescription = "Lisinopril 10mg daily",
+                            ResidentID = 11
+                        },
+                        new
+                        {
+                            RecordID = 2,
+                            DateReported = new DateTime(2024, 3, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Diagnosis = "Type 2 Diabetes",
+                            DoctorID = 2,
+                            Prescription = "Metformin 500mg twice daily",
+                            ResidentID = 12
+                        },
+                        new
+                        {
+                            RecordID = 3,
+                            DateReported = new DateTime(2024, 2, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Diagnosis = "Arthritis",
+                            DoctorID = 3,
+                            Prescription = "Ibuprofen 400mg as needed",
+                            ResidentID = 13
+                        },
+                        new
+                        {
+                            RecordID = 4,
+                            DateReported = new DateTime(2024, 2, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Diagnosis = "Mild Dementia",
+                            DoctorID = 4,
+                            Prescription = "Donepezil 5mg daily",
+                            ResidentID = 14
+                        },
+                        new
+                        {
+                            RecordID = 5,
+                            DateReported = new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Diagnosis = "High Cholesterol",
+                            DoctorID = 5,
+                            Prescription = "Atorvastatin 20mg daily",
+                            ResidentID = 15
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -618,7 +1193,7 @@ namespace EverCareCommunity.Migrations
             modelBuilder.Entity("EverCareCommunity.Models.EmergencyContact", b =>
                 {
                     b.HasOne("EverCareCommunity.Models.Address", "Address")
-                        .WithMany()
+                        .WithMany("EmergencyContacts")
                         .HasForeignKey("AddressID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -713,6 +1288,11 @@ namespace EverCareCommunity.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("EverCareCommunity.Models.Address", b =>
+                {
+                    b.Navigation("EmergencyContacts");
                 });
 
             modelBuilder.Entity("EverCareCommunity.Models.ElderlyResident", b =>

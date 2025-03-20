@@ -20,10 +20,55 @@ namespace EverCareCommunity.Controllers
         }
 
         // GET: MedicalConditions
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+      string sortOrder,
+      string currentFilter,
+      string searchString,
+      int? pageNumber)
         {
-            var everCareCommunityContext = _context.MedicalConditions.Include(m => m.ElderlyResident);
-            return View(await everCareCommunityContext.ToListAsync());
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+
+
+
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var medicalconditions = _context.MedicalConditions
+               .Include(a => a.ElderlyResident)
+               .AsNoTracking();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                medicalconditions = medicalconditions.Where(a => a.ElderlyResident.FirstName.Contains(searchString));
+
+
+            }
+
+
+          
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    medicalconditions = medicalconditions.OrderByDescending(s => s.ElderlyResident.FirstName);
+                    break;
+                case "Date":
+                    medicalconditions = medicalconditions.OrderBy(s => s.ElderlyResident.FirstName);
+                    break;
+            }
+
+            int pageSize = 3;
+            return View(await PaginatedList<MedicalCondition>.CreateAsync(medicalconditions.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: MedicalConditions/Details/5

@@ -12,15 +12,15 @@ a {
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
+  color: #000000;
+  background-color:#e5e5e5;
   border-color: #1861ac;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+  color: #ff0000;
+  background-color: #000000;
+  border-color: #fff;
 }
 
 .border-top {

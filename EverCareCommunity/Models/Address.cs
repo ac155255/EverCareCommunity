@@ -1,4 +1,5 @@
-﻿namespace EverCareCommunity.Models;
+﻿
+namespace EverCareCommunity.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -36,5 +37,7 @@ public class Address
     public string PhoneNumber { get; set; }
 
     public ElderlyResident ElderlyResident { get; set; }
+
+    public ICollection<EmergencyContact> EmergencyContacts { get; set; } = new List<EmergencyContact>();
 
 }

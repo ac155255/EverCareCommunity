@@ -1,4 +1,5 @@
-﻿namespace EverCareCommunity.Models;
+﻿
+namespace EverCareCommunity.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Net;
@@ -25,7 +26,10 @@ public class EmergencyContact
     [ForeignKey("Address")]
     public int AddressID { get; set; }
 
-    [Required(ErrorMessage = "First name is required.")]
+    [ForeignKey("AddressID")]
+    public Address Address { get; set; }
+
+[Required(ErrorMessage = "First name is required.")]
     [StringLength(50, MinimumLength = 2, ErrorMessage = "First name must be between 2 and 50 characters.")]
     [RegularExpression(@"^[A-Za-z\s'-]+$", ErrorMessage = "First name can only contain letters, spaces, hyphens, and apostrophes.")]
     public string FirstName { get; set; }
@@ -42,8 +46,8 @@ public class EmergencyContact
     [RegularExpression(@"^\+?[0-9\s-]+$", ErrorMessage = "Phone number can only contain digits, spaces, dashes, and an optional leading +.")]
     public string PhoneNumber { get; set; }
 
-    
+
 
     public ElderlyResident ElderlyResident { get; set; }
-    public Address Address { get; set; }
+    
 }

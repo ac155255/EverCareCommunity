@@ -105,7 +105,7 @@ namespace EverCareCommunity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CaregiverID,FirstName,LastName,QualificationType,Email,Phone,Experience,Availability")] Caregiver caregiver)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 _context.Add(caregiver);
                 await _context.SaveChangesAsync();
@@ -142,7 +142,7 @@ namespace EverCareCommunity.Controllers
                 return NotFound();
             }
 
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
