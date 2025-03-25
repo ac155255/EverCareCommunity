@@ -22,10 +22,47 @@ namespace EverCareCommunity.Controllers
         }
 
         // GET: EmergencyContacts
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, string sortOrder, string currentFilter, int? pageNumber)
         {
-            var everCareCommunityContext = _context.EmergencyContacts.Include(e => e.Address).Include(e => e.ElderlyResident);
-            return View(await everCareCommunityContext.ToListAsync());
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var emergencycontacts = _context.EmergencyContacts
+        
+                .Include(a => a.ElderlyResident)
+                .Include(a => a.Address)
+                .AsNoTracking();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                emergencycontacts = emergencycontacts.Where(a => a.ElderlyResident.FirstName.Contains(searchString));
+                                                    
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    emergencycontacts = emergencycontacts.OrderByDescending(a => a.ElderlyResident.FirstName);
+                    break;
+                default:
+                    emergencycontacts = emergencycontacts.OrderBy(a => a.ElderlyResident.FirstName);
+                    break;
+            }
+
+            int pageSize = 3;
+            return View(await PaginatedList<EmergencyContact>.CreateAsync(emergencycontacts, pageNumber ?? 1, pageSize));
         }
 
         // GET: EmergencyContacts/Details/5

@@ -40,39 +40,21 @@ public class ElderlyResident
     public GenderType Gender { get; set; }
 
 
+    [Required]
     [DataType(DataType.Date)]
     [CustomValidation(typeof(ElderlyResident), nameof(ValidateDateOfBirth))]
-    public DateTime? DateOfBirth { get; set; } // Allow nullable
+    public DateTime ? DateOfBirth { get; set; }
 
-    public static ValidationResult ValidateDateOfBirth(object value, ValidationContext context)
+    public static ValidationResult ValidateDateOfBirth(DateTime dob, ValidationContext context)
     {
-        if (value == null)
-        {
-            return new ValidationResult("Date of birth is required.");
-        }
+        int age = DateTime.Today.Year - dob.Year;
+        if (dob > DateTime.Today.AddYears(-age)) age--; // Adjust if birthday hasn't occurred yet
 
-        if (!(value is DateTime date))
-        {
-            return new ValidationResult("Invalid date format.");
-        }
-
-        int minAge = 18;
-        int maxAge = 100;
-        DateTime today = DateTime.Today;
-        int age = today.Year - date.Year;
-        if (date > today.AddYears(-age)) age--;
-
-        if (age < minAge)
-        {
-            return new ValidationResult($"You must be at least {minAge} years old.");
-        }
-        if (age > maxAge)
-        {
-            return new ValidationResult($"Age cannot exceed {maxAge} years.");
-        }
-
-        return ValidationResult.Success;
+        return age >= 40 ? ValidationResult.Success : new ValidationResult("Person must be at least 40 years old.");
     }
+
+
+
 
     [MaxLength(255)]
     public string Address { get; set; }

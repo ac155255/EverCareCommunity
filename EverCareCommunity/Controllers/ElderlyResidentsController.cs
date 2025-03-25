@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using EverCareCommunity.Data;
 using EverCareCommunity.Models;
-using Microsoft.AspNetCore.Authorization;
+using System.ComponentModel.DataAnnotations;
 
 namespace EverCareCommunity.Controllers
 {
@@ -22,16 +21,11 @@ namespace EverCareCommunity.Controllers
         }
 
         // GET: ElderlyResidents
-        public async Task<IActionResult> Index(
-    string sortOrder,
-    string currentFilter,
-    string searchString,
-    int? pageNumber)
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
             ViewData["CurrentSort"] = sortOrder;
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["NameSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
-            
 
             if (searchString != null)
             {
@@ -44,38 +38,21 @@ namespace EverCareCommunity.Controllers
 
             ViewData["CurrentFilter"] = searchString;
 
-            var residents = _context.ElderlyResidents
-     .Select(s => new ElderlyResident
-     {
-         ResidentID = s.ResidentID,
-         FirstName = s.FirstName,
-         LastName = s.LastName,
-         Email = s.Email,
-         PhoneNumber = s.PhoneNumber,
-         Gender = s.Gender,
-         Address = s.Address,
-         DateOfBirth = s.DateOfBirth
-     });
-            if (!String.IsNullOrEmpty(searchString))
+            var residents = _context.ElderlyResidents.AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchString))
             {
-                residents = residents.Where(s => s.FirstName.Contains(searchString)
-                                       || s.LastName.Contains(searchString));
+                residents = residents.Where(s => s.FirstName.Contains(searchString) || s.LastName.Contains(searchString));
             }
-            switch (sortOrder)
+
+            residents = sortOrder switch
             {
-                case "name_desc":
-                    residents = residents.OrderByDescending(s => s.FirstName);
-                    break;
-                case "Date":
-                    residents = residents.OrderBy(s => s.DateOfBirth);
-                    break;
-                case "date_desc":
-                    residents = residents.OrderByDescending(s => s.DateOfBirth);
-                    break;
-                default:
-                    residents = residents.OrderBy(s => s.FirstName);
-                    break;
-            }
+                "name_desc" => residents.OrderByDescending(s => s.FirstName),
+                "Date" => residents.OrderBy(s => s.DateOfBirth),
+                "date_desc" => residents.OrderByDescending(s => s.DateOfBirth),
+                _ => residents.OrderBy(s => s.FirstName),
+            };
+
             int pageSize = 4;
             return View(await PaginatedList<ElderlyResident>.CreateAsync(residents.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
@@ -83,19 +60,12 @@ namespace EverCareCommunity.Controllers
         // GET: ElderlyResidents/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.ElderlyResidents == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var elderlyResident = await _context.ElderlyResidents
-                .FirstOrDefaultAsync(m => m.ResidentID == id);
-            if (elderlyResident == null)
-            {
-                return NotFound();
-            }
+            var resident = await _context.ElderlyResidents.FindAsync(id);
+            if (resident == null) return NotFound();
 
-            return View(elderlyResident);
+            return View(resident);
         }
 
         // GET: ElderlyResidents/Create
@@ -105,59 +75,57 @@ namespace EverCareCommunity.Controllers
         }
 
         // POST: ElderlyResidents/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ResidentID,FirstName,LastName,Email,PhoneNumber,Gender,DateOfBirth,Address")] ElderlyResident elderlyResident)
+        public async Task<IActionResult> Create([Bind("ResidentID,FirstName,LastName,Email,PhoneNumber,Gender,DateOfBirth,Address")] ElderlyResident resident)
         {
-            if (!ModelState.IsValid)
+            if (resident.DateOfBirth == null || CalculateAge(resident.DateOfBirth.Value) < 40)
             {
-                _context.Add(elderlyResident);
+                ModelState.AddModelError("DateOfBirth", "Resident must be at least 40 years old.");
+            }
+
+            if (ModelState.IsValid)
+            {
+                _context.Add(resident);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(elderlyResident);
+            return View(resident);
         }
 
         // GET: ElderlyResidents/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.ElderlyResidents == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var elderlyResident = await _context.ElderlyResidents.FindAsync(id);
-            if (elderlyResident == null)
-            {
-                return NotFound();
-            }
-            return View(elderlyResident);
+            var resident = await _context.ElderlyResidents.FindAsync(id);
+            if (resident == null) return NotFound();
+
+            return View(resident);
         }
 
         // POST: ElderlyResidents/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ResidentID,FirstName,LastName,Email,PhoneNumber,Gender,DateOfBirth,Address")] ElderlyResident elderlyResident)
+        public async Task<IActionResult> Edit(int id, [Bind("ResidentID,FirstName,LastName,Email,PhoneNumber,Gender,DateOfBirth,Address")] ElderlyResident resident)
         {
-            if (id != elderlyResident.ResidentID)
+            if (id != resident.ResidentID) return NotFound();
+
+            if (resident.DateOfBirth == null || CalculateAge(resident.DateOfBirth.Value) < 40)
             {
-                return NotFound();
+                ModelState.AddModelError("DateOfBirth", "Resident must be at least 40 years old.");
             }
 
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(elderlyResident);
+                    _context.Update(resident);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ElderlyResidentExists(elderlyResident.ResidentID))
+                    if (!_context.ElderlyResidents.Any(e => e.ResidentID == id))
                     {
                         return NotFound();
                     }
@@ -168,25 +136,18 @@ namespace EverCareCommunity.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(elderlyResident);
+            return View(resident);
         }
 
         // GET: ElderlyResidents/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.ElderlyResidents == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var elderlyResident = await _context.ElderlyResidents
-                .FirstOrDefaultAsync(m => m.ResidentID == id);
-            if (elderlyResident == null)
-            {
-                return NotFound();
-            }
+            var resident = await _context.ElderlyResidents.FindAsync(id);
+            if (resident == null) return NotFound();
 
-            return View(elderlyResident);
+            return View(resident);
         }
 
         // POST: ElderlyResidents/Delete/5
@@ -194,23 +155,21 @@ namespace EverCareCommunity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.ElderlyResidents == null)
+            var resident = await _context.ElderlyResidents.FindAsync(id);
+            if (resident != null)
             {
-                return Problem("Entity set 'EverCareCommunityContext.ElderlyResidents'  is null.");
+                _context.ElderlyResidents.Remove(resident);
+                await _context.SaveChangesAsync();
             }
-            var elderlyResident = await _context.ElderlyResidents.FindAsync(id);
-            if (elderlyResident != null)
-            {
-                _context.ElderlyResidents.Remove(elderlyResident);
-            }
-            
-            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ElderlyResidentExists(int id)
+        private int CalculateAge(DateTime dob)
         {
-          return (_context.ElderlyResidents?.Any(e => e.ResidentID == id)).GetValueOrDefault();
+            int age = DateTime.Today.Year - dob.Year;
+            if (dob.Date > DateTime.Today.AddYears(-age)) age--;
+            return age;
         }
     }
 }

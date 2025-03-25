@@ -38,11 +38,7 @@ public class Caregiver
     [RegularExpression(@"^\+?[0-9\s-]+$", ErrorMessage = "Phone number can only contain digits, spaces, dashes, and an optional leading +.")]
     public string Phone { get; set; }
 
-    
-    
-    
-
-    
+   
     public int Experience { get; set; }
 
     public bool Availability { get; set; }

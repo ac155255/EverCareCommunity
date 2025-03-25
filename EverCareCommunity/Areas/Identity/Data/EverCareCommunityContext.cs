@@ -252,8 +252,8 @@ public class EverCareCommunityContext : IdentityDbContext<EverCareCommunityUser>
        new Address { AddressID = 1, ResidentID = 11, Street = "123 Elm Street", City = "Springfield", ZipCode = "12345", Relationship = "Guardian", PhoneNumber = "+1234567890" },
        new Address { AddressID = 2, ResidentID = 12, Street = "456 Oak Avenue", City = "Rivertown", ZipCode = "23456", Relationship = "Child", PhoneNumber = "+2345678901" },
        new Address { AddressID = 3, ResidentID = 13, Street = "789 Pine Road", City = "Lakewood", ZipCode = "34567", Relationship = "Spouse", PhoneNumber = "+3456789012" },
-       new Address { AddressID = 4, ResidentID = 14, Street = "101 Maple Lane", City = "Hillview", ZipCode = "45678", Relationship = "Sibling", PhoneNumber = "+4567890123" },
-       new Address { AddressID = 5, ResidentID = 15, Street = "202 Birch Court", City = "Seaside", ZipCode = "56789", Relationship = "Friend", PhoneNumber = "+5678901234" }
+       new Address { AddressID = 4, ResidentID = 14, Street = "101 Maple Lane", City = "Hillview", ZipCode = "45678", Relationship = "Sibling", PhoneNumber = "+4567890123" }
+      
        );
    
 
