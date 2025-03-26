@@ -22,14 +22,60 @@ namespace EverCareCommunity.Controllers
         }
 
         // GET: MedicalRecords
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+      string sortOrder,
+      string currentFilter,
+      string searchString,
+      int? pageNumber)
         {
-            var everCareCommunityContext = _context.MedicalRecords.Include(m => m.Doctor).Include(m => m.ElderlyResident);
-            return View(await everCareCommunityContext.ToListAsync());
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+
+
+
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var medicalrecords = _context.MedicalRecords
+                .Include(a => a.Doctor)
+               .Include(a => a.ElderlyResident)
+               .AsNoTracking();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                medicalrecords = medicalrecords.Where(a => a.ElderlyResident.FirstName.Contains(searchString));
+
+
+            }
+
+
+
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    medicalrecords = medicalrecords.OrderByDescending(s => s.ElderlyResident.FirstName);
+                    break;
+                case "Date":
+                    medicalrecords = medicalrecords.OrderBy(s => s.ElderlyResident.FirstName);
+                    break;
+            }
+
+            int pageSize = 3;
+            return View(await PaginatedList<MedicalRecord>.CreateAsync(medicalrecords.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
-        // GET: MedicalRecords/Details/5
-        public async Task<IActionResult> Details(int? id)
+            // GET: MedicalRecords/Details/5
+            public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.MedicalRecords == null)
             {
