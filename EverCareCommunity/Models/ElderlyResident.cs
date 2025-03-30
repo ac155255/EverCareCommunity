@@ -12,6 +12,34 @@ public enum GenderType
     Other
 }
 
+public class AgeRangeAttribute : ValidationAttribute
+{
+    private readonly int _minAge;
+    private readonly int _maxAge;
+
+    public AgeRangeAttribute(int minAge, int maxAge)
+    {
+        _minAge = minAge;
+        _maxAge = maxAge;
+    }
+
+    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+    {
+        if (value is DateTime date)
+        {
+            var today = DateTime.Today;
+            int age = today.Year - date.Year;
+            if (date.Date > today.AddYears(-age)) age--; 
+
+            if (age < _minAge || age > _maxAge)
+            {
+                return new ValidationResult($"Age must be between {_minAge} and {_maxAge} years.");
+            }
+        }
+        return ValidationResult.Success;
+    }
+}
+
 public class ElderlyResident
 {
     [Key]
@@ -42,16 +70,10 @@ public class ElderlyResident
 
     [Required]
     [DataType(DataType.Date)]
-    [CustomValidation(typeof(ElderlyResident), nameof(ValidateDateOfBirth))]
+    [AgeRange(30, 150, ErrorMessage = "Age must be between 30 and 120 years.")]
     public DateTime ? DateOfBirth { get; set; }
 
-    public static ValidationResult ValidateDateOfBirth(DateTime dob, ValidationContext context)
-    {
-        int age = DateTime.Today.Year - dob.Year;
-        if (dob > DateTime.Today.AddYears(-age)) age--; // Adjust if birthday hasn't occurred yet
-
-        return age >= 40 ? ValidationResult.Success : new ValidationResult("Person must be at least 40 years old.");
-    }
+   
 
 
 
