@@ -12,6 +12,7 @@ public enum GenderType
     Other
 }
 
+// this AgeRangeAttribute vaildation only accepts residents from 30 to 120 years old
 public class AgeRangeAttribute : ValidationAttribute
 {
     private readonly int _minAge;
@@ -73,10 +74,6 @@ public class ElderlyResident
     [AgeRange(30, 150, ErrorMessage = "Age must be between 30 and 120 years.")]
     public DateTime ? DateOfBirth { get; set; }
 
-   
-
-
-
 
     [MaxLength(255)]
     public string Address { get; set; }
@@ -84,7 +81,7 @@ public class ElderlyResident
     public ICollection<MedicalCondition> MedicalConditions { get; set; } = new List<MedicalCondition>();
     public ICollection<MedicalRecord> MedicalRecords { get; set; } = new List<MedicalRecord>();
 
-    // Updated EmergencyContacts to use a proper entity
+   
     public ICollection<EmergencyContact> EmergencyContacts { get; set; } = new List<EmergencyContact>();
 
     public ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();

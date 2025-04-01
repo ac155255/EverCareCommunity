@@ -40,7 +40,7 @@
             <div class="form-group">
                 <label asp-for="DateOfBirth" class="control-label"></label>
                 <input asp-for="DateOfBirth" class="form-control" type="date"
-                       min="@DateTime.Now.AddYears(-120).ToString("yyyy-MM-dd")"
+                       min="@DateTime.Now.AddYears(-120).ToString("yyyy-MM-dd")"  
                        max="@DateTime.Now.AddYears(-30).ToString("yyyy-MM-dd")" />
 
 
