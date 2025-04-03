@@ -17,12 +17,12 @@ public class Caregiver
     public int CaregiverID { get; set; }
 
     [Required(ErrorMessage = "First name is required.")]
-    [StringLength(25, MinimumLength = 2, ErrorMessage = "First name must be between 2 and 50 characters.")]
+    [StringLength(25, MinimumLength = 1, ErrorMessage = "First name must be between 1 and 25 characters.")]
     [RegularExpression(@"^[A-Za-z\s'-]+$", ErrorMessage = "First name can only contain letters, spaces, hyphens, and apostrophes.")]
     public string FirstName { get; set; }
 
     [Required(ErrorMessage = "Last name is required.")]
-    [StringLength(25, MinimumLength = 2, ErrorMessage = "Last name must be between 2 and 50 characters.")]
+    [StringLength(25, MinimumLength = 1, ErrorMessage = "Last name must be between 1 and 25 characters.")]
     [RegularExpression(@"^[A-Za-z\s'-]+$", ErrorMessage = "Last name can only contain letters, spaces, hyphens, and apostrophes.")]
     public string LastName { get; set; }
 
