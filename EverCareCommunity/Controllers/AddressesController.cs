@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace EverCareCommunity.Controllers
 {
+    // needs login 
     [Authorize]
     public class AddressesController : Controller
     {
@@ -23,7 +24,7 @@ namespace EverCareCommunity.Controllers
 
         // GET: Addresses
         public async Task<IActionResult> Index(
-      string sortOrder,
+      string sortOrder, 
       string currentFilter,
       string searchString,
       int? pageNumber)

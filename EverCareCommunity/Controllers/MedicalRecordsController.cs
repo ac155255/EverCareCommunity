@@ -11,84 +11,81 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace EverCareCommunity.Controllers
 {
-    [Authorize]
+    [Authorize] // Only authenticated users can access 
     public class MedicalRecordsController : Controller
     {
         private readonly EverCareCommunityContext _context;
 
         public MedicalRecordsController(EverCareCommunityContext context)
         {
-            _context = context;
+            _context = context; 
         }
 
         // GET: MedicalRecords
         public async Task<IActionResult> Index(
-      string sortOrder,
-      string currentFilter,
-      string searchString,
-      int? pageNumber)
+            string sortOrder, // Determines sort order (e.g., name ascending or descending)
+            string currentFilter, // Holds the search string from previous requests
+            string searchString, // New search input from user
+            int? pageNumber) // Page number for pagination
         {
-            ViewData["CurrentSort"] = sortOrder;
+            ViewData["CurrentSort"] = sortOrder; // Pass sort order to the view
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-
-
-
 
             if (searchString != null)
             {
-                pageNumber = 1;
+                pageNumber = 1; 
             }
             else
             {
-                searchString = currentFilter;
+                searchString = currentFilter; 
             }
 
-            ViewData["CurrentFilter"] = searchString;
+            ViewData["CurrentFilter"] = searchString; 
 
+            // Get all medical records and include related Doctor and ElderlyResident data
             var medicalrecords = _context.MedicalRecords
                 .Include(a => a.Doctor)
-               .Include(a => a.ElderlyResident)
-               .AsNoTracking();
+                .Include(a => a.ElderlyResident)
+                .AsNoTracking(); 
 
+            // Filter based on search string
             if (!string.IsNullOrEmpty(searchString))
             {
                 medicalrecords = medicalrecords.Where(a => a.ElderlyResident.FirstName.Contains(searchString));
-
-
             }
 
-
-
-
+           
             switch (sortOrder)
             {
                 case "name_desc":
                     medicalrecords = medicalrecords.OrderByDescending(s => s.ElderlyResident.FirstName);
                     break;
-                case "Date":
+                case "Date": // Not used but kept for future sorting
                     medicalrecords = medicalrecords.OrderBy(s => s.ElderlyResident.FirstName);
                     break;
             }
 
-            int pageSize = 3;
+            int pageSize = 3; // Number of records per page
             return View(await PaginatedList<MedicalRecord>.CreateAsync(medicalrecords.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
-            // GET: MedicalRecords/Details/5
-            public async Task<IActionResult> Details(int? id)
+        // GET: MedicalRecords/Details/5
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.MedicalRecords == null)
             {
-                return NotFound();
+                return NotFound(); // If no ID is provided or DB context is null
             }
 
+            // Find record by ID and include related data
             var medicalRecord = await _context.MedicalRecords
                 .Include(m => m.Doctor)
                 .Include(m => m.ElderlyResident)
                 .FirstOrDefaultAsync(m => m.RecordID == id);
+
             if (medicalRecord == null)
             {
-                return NotFound();
+                return NotFound(); // If record not found
             }
 
             return View(medicalRecord);
@@ -97,24 +94,25 @@ namespace EverCareCommunity.Controllers
         // GET: MedicalRecords/Create
         public IActionResult Create()
         {
+            // Load dropdowns for doctors and residents
             ViewData["DoctorID"] = new SelectList(_context.Doctors, "DoctorID", "FirstName");
             ViewData["ResidentID"] = new SelectList(_context.ElderlyResidents, "ResidentID", "FirstName");
             return View();
         }
 
         // POST: MedicalRecords/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken] // Prevent CSRF attacks
         public async Task<IActionResult> Create([Bind("RecordID,ResidentID,DoctorID,Diagnosis,Prescription,DateReported")] MedicalRecord medicalRecord)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid) // If the model is valid, save to DB
             {
                 _context.Add(medicalRecord);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+            // If model is invalid, reload dropdowns and return view
             ViewData["DoctorID"] = new SelectList(_context.Doctors, "DoctorID", "FirstName", medicalRecord.DoctorID);
             ViewData["ResidentID"] = new SelectList(_context.ElderlyResidents, "ResidentID", "FirstName", medicalRecord.ResidentID);
             return View(medicalRecord);
@@ -133,14 +131,14 @@ namespace EverCareCommunity.Controllers
             {
                 return NotFound();
             }
+
+            // Load dropdowns with selected values
             ViewData["DoctorID"] = new SelectList(_context.Doctors, "DoctorID", "FirstName", medicalRecord.DoctorID);
             ViewData["ResidentID"] = new SelectList(_context.ElderlyResidents, "ResidentID", "FirstName", medicalRecord.ResidentID);
             return View(medicalRecord);
         }
 
         // POST: MedicalRecords/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("RecordID,ResidentID,DoctorID,Diagnosis,Prescription,DateReported")] MedicalRecord medicalRecord)
@@ -154,22 +152,24 @@ namespace EverCareCommunity.Controllers
             {
                 try
                 {
-                    _context.Update(medicalRecord);
+                    _context.Update(medicalRecord); // Update the record
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!MedicalRecordExists(medicalRecord.RecordID))
                     {
-                        return NotFound();
+                        return NotFound(); // If record no longer exists
                     }
                     else
                     {
-                        throw;
+                        throw; // Re-throw the exception if unknown issue
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index)); // Return to list after update
             }
+
+            // Reload dropdowns and return view on validation error
             ViewData["DoctorID"] = new SelectList(_context.Doctors, "DoctorID", "FirstName", medicalRecord.DoctorID);
             ViewData["ResidentID"] = new SelectList(_context.ElderlyResidents, "ResidentID", "FirstName", medicalRecord.ResidentID);
             return View(medicalRecord);
@@ -183,40 +183,44 @@ namespace EverCareCommunity.Controllers
                 return NotFound();
             }
 
+            // Find record with related data
             var medicalRecord = await _context.MedicalRecords
                 .Include(m => m.Doctor)
                 .Include(m => m.ElderlyResident)
                 .FirstOrDefaultAsync(m => m.RecordID == id);
+
             if (medicalRecord == null)
             {
                 return NotFound();
             }
 
-            return View(medicalRecord);
+            return View(medicalRecord); // Show confirmation view
         }
 
         // POST: MedicalRecords/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("Delete")] // Custom action name to match route
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.MedicalRecords == null)
             {
-                return Problem("Entity set 'EverCareCommunityContext.MedicalRecords'  is null.");
+                return Problem("Entity set 'EverCareCommunityContext.MedicalRecords' is null.");
             }
+
             var medicalRecord = await _context.MedicalRecords.FindAsync(id);
             if (medicalRecord != null)
             {
-                _context.MedicalRecords.Remove(medicalRecord);
+                _context.MedicalRecords.Remove(medicalRecord); // Remove from database
             }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            await _context.SaveChangesAsync(); // Commit changes
+            return RedirectToAction(nameof(Index)); // Return to list
         }
 
+        // Helper method to check if a record exists
         private bool MedicalRecordExists(int id)
         {
-          return (_context.MedicalRecords?.Any(e => e.RecordID == id)).GetValueOrDefault();
+            return (_context.MedicalRecords?.Any(e => e.RecordID == id)).GetValueOrDefault();
         }
     }
 }
