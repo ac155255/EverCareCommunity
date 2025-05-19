@@ -16,6 +16,8 @@ namespace EverCareCommunity
 
             builder.Services.AddDefaultIdentity<EverCareCommunityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<EverCareCommunityContext>();
 
+
+
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
@@ -35,7 +37,7 @@ namespace EverCareCommunity
             app.UseRouting();
 
             app.UseAuthorization();
-
+          
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");

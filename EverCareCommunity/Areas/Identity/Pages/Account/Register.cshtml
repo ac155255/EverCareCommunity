@@ -29,6 +29,13 @@
                 <label asp-for="Input.Email">Email</label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
+            <div class="mb-4">
+                <label asp-for="Input.Role" class="form-label">Role</label>
+                <select asp-for="Input.Role" class="form-select"
+                asp-items="Html.GetEnumSelectList<EverCareCommunity.Areas.Identity.Data.RoleType>()">
+                    <option value="">-- Select Role</option></select>
+
+            </div>
             <div class="form-floating mb-3">
                 <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
                 <label asp-for="Input.Password">Password</label>

@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace EverCareCommunity.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Caregiver")]
     public class CaregiverResidentAssignmentsController : Controller
     {
         private readonly EverCareCommunityContext _context;

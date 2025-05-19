@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace EverCareCommunity.Controllers
 {
     // needs login 
-    [Authorize]
+    [Authorize(Roles = "Administrator")]
     public class AddressesController : Controller
     {
         private readonly EverCareCommunityContext _context;
