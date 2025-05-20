@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace EverCareCommunity.Controllers
 {
-    [Authorize] // Only authenticated users can access 
+    [Authorize(Roles = "Doctor,Caregiver")] // Only authenticated users can access 
     public class MedicalRecordsController : Controller
     {
         private readonly EverCareCommunityContext _context;
