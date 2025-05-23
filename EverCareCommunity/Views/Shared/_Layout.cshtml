@@ -5,109 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - EverCareCommunity</title>
 
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/EverCareCommunity.styles.css" asp-append-version="true" />
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-
-        /* Navbar Styling */
-        .navbar {
-            background-color: darkslategray; 
-        }
-
-            .navbar a {
-                color: white !important;
-                font-weight: bold;
-            }
-
-            .navbar .nav-item .nav-link:hover {
-                color: black !important; 
-            }
-
-        /* Hero Section */
-        .hero {
-            background: url('https://img.freepik.com/free-photo/positive-mother-daughter-enjoying-dramatic-view_1262-18574.jpg?t=st=1743469821~exp=1743473421~hmac=7949a444cd3e6042cec96361e7e42573cd4dada2d28b61fd951f0583d82ab45b&w=1380') center/cover no-repeat;
-            color: gray;
-            text-align: center;
-            padding: 100px 20px;
-        }
-
-            .hero h1 {
-                font-size: 3rem;
-                font-weight: bold;
-            }
-
-            .hero .btn {
-                padding: 10px 20px;
-                font-size: 1.2rem;
-                margin: 10px;
-            }
-    </style>
 </head>
 <body>
-
-    <!-- Navbar -->
-    <header>
-        <nav class="navbar navbar-expand-lg">
-            <div class="container-fluid">
-                <a class="navbar-brand text-white" asp-area="" asp-controller="Home" asp-action="Index">EverCareCommunity</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse justify-content-between">
-                    <ul class="navbar-nav">
-                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Privacy">Privacy</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Addresses" asp-action="Index">Address</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Appointments" asp-action="Index">Appointment</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Caregivers" asp-action="Index">Caregiver</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Doctors" asp-action="Index">Doctor</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="ElderlyResidents" asp-action="Index">Resident</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="EmergencyContacts" asp-action="Index">Contacts</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="MedicalConditions" asp-action="Index">MedicalCondition</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="MedicalRecords" asp-action="Index">MedicalRecord</a></li>
-                    </ul>
-                </div>
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2 class="sidebar-title">EverCareCommunity</h2>
+            <ul class="sidebar-nav">
+                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a asp-controller="Home" asp-action="Privacy">Privacy</a></li>
+                <li><a asp-controller="Addresses" asp-action="Index">Address</a></li>
+                <li><a asp-controller="Appointments" asp-action="Index">Appointment</a></li>
+                <li><a asp-controller="Caregivers" asp-action="Index">Caregiver</a></li>
+                <li><a asp-controller="Doctors" asp-action="Index">Doctor</a></li>
+                <li><a asp-controller="ElderlyResidents" asp-action="Index">Resident</a></li>
+                <li><a asp-controller="EmergencyContacts" asp-action="Index">Contacts</a></li>
+                <li><a asp-controller="MedicalConditions" asp-action="Index">Medical Condition</a></li>
+                <li><a asp-controller="MedicalRecords" asp-action="Index">Medical Record</a></li>
+            </ul>
+            <div class="login-partial">
                 <partial name="_LoginPartial.cshtml" />
             </div>
-        </nav>
-    </header>
+        </aside>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <h1>EVERCARE COMMUNITY</h1>
-        <a asp-controller="ElderlyResidents" asp-action="Create" class="btn btn-primary">Join as a Resident</a>
-        <a asp-controller="Caregivers" asp-action="Create" class="btn btn-primary">Apply as a Caregiver</a>
-        <a asp-controller="Doctors" asp-action="Create" class="btn btn-primary">Register as a Doctor</a>
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Hero Section -->
+            <section class="hero text-center mb-5">
+                <h1>Welcome to EverCare Community</h1>
+                <div class="btn-group mt-3">
+                    <a asp-controller="ElderlyResidents" asp-action="Create" class="btn btn-warning text-dark">Join as a Resident</a>
+                    <a asp-controller="Caregivers" asp-action="Create" class="btn btn-light">Apply as a Caregiver</a>
+                    <a asp-controller="Doctors" asp-action="Create" class="btn btn-info text-white">Register as a Doctor</a>
+                </div>
+            </section>
 
-        
-    </section>
+            <!-- Page Body -->
+            <main role="main" class="container pb-3">
+                @RenderBody()
+            </main>
 
-    <!-- Page Content -->
-    <div class="container mt-4">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <!-- Footer -->
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - EverCareCommunity - <a asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <!-- Footer -->
+            <footer class="text-center mt-5">
+                <hr />
+                <p>&copy; 2025 - EverCareCommunity | <a asp-controller="Home" asp-action="Privacy">Privacy Policy</a></p>
+            </footer>
         </div>
-    </footer>
+    </div>
 
     <!-- Scripts -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
-
 </body>
 </html>
-

@@ -1,22 +1,172 @@
-html {
-  font-size: 14px;
+/* ---------------------------------------
+   GLOBAL STYLES
+---------------------------------------- */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+/* ---------------------------------------
+   NAVBAR
+---------------------------------------- */
+.navbar {
+    background-color: darkslategray;
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    .navbar a {
+        color: white !important;
+        font-weight: bold;
+    }
+
+    .navbar .nav-item .nav-link:hover {
+        color: black !important;
+    }
+
+/* ---------------------------------------
+   HERO SECTION
+---------------------------------------- */
+.hero {
+    position: relative;
+    background: url('https://img.freepik.com/free-photo/positive-mother-daughter-enjoying-dramatic-view_1262-18574.jpg?t=st=1743469821~exp=1743473421~hmac=7949a444cd3e6042cec96361e7e42573cd4dada2d28b61fd951f0583d82ab45b&w=1380') center/cover no-repeat;
+    color: white;
+    text-align: center;
+    padding: 100px 20px;
+    animation: fadeInUp 1s ease-out;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+    /* Add this overlay using a ::before pseudo-element */
+    .hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.4); /* 40% black overlay */
+        z-index: 0;
+    }
+
+    /* Make sure text and buttons are above the overlay */
+    .hero h1,
+    .hero .btn {
+        position: relative;
+        z-index: 1;
+    }
+
+
+/* ---------------------------------------
+   ANIMATIONS
+---------------------------------------- */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
+
+/* ---------------------------------------
+   PAGE CONTAINER
+---------------------------------------- */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* ---------------------------------------
+   FOOTER
+---------------------------------------- */
+footer {
+    padding: 20px 0;
+    background-color: #f8f9fa;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+    footer a {
+        color: #6c757d;
+        text-decoration: none;
+    }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
 
 body {
-  margin-bottom: 60px;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f8f9fa;
+}
+
+.d-flex {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 240px;
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px 15px;
+    flex-shrink: 0;
+}
+
+.sidebar-title {
+    font-size: 1.5rem;
+    color: #ecf0f1;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.sidebar-nav {
+    list-style: none;
+    padding: 0;
+}
+
+    .sidebar-nav li {
+        margin: 10px 0;
+    }
+
+    .sidebar-nav a {
+        color: #ecf0f1;
+        text-decoration: none;
+        display: block;
+        padding: 10px;
+        border-radius: 5px;
+        transition: background 0.3s;
+    }
+
+        .sidebar-nav a:hover {
+            background-color: #34495e;
+        }
+
+.login-partial {
+    margin-top: 30px;
+    border-top: 1px solid #7f8c8d;
+    padding-top: 15px;
+    font-size: 0.9rem;
+}
+
+/* Main Content Styles */
+.main-content {
+    flex-grow: 1;
+    padding: 30px;
+}
+
+.hero {
+    background: url('/images/hero-bg.jpg') no-repeat center center;
+    background-size: cover;
+    padding: 60px 30px;
+    color: white;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
 }
