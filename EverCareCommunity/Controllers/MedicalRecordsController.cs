@@ -65,7 +65,7 @@ namespace EverCareCommunity.Controllers
                     break;
             }
 
-            int pageSize = 3; // Number of records per page
+            int pageSize = 5; // Number of records per page
             return View(await PaginatedList<MedicalRecord>.CreateAsync(medicalrecords.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 

@@ -71,7 +71,7 @@ namespace EverCareCommunity.Controllers
                     break;
             }
 
-            int pageSize = 3;
+            int pageSize = 5;
             return View(await PaginatedList<Doctor>.CreateAsync(doctors.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
             // GET: Doctors/Details/5

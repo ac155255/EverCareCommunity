@@ -61,7 +61,7 @@ namespace EverCareCommunity.Controllers
                     break;
             }
 
-            int pageSize = 3;
+            int pageSize = 5;
             return View(await PaginatedList<EmergencyContact>.CreateAsync(emergencycontacts, pageNumber ?? 1, pageSize));
         }
 

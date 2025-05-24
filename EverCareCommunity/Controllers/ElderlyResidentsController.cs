@@ -53,7 +53,7 @@ namespace EverCareCommunity.Controllers
                 _ => residents.OrderBy(s => s.FirstName),
             };
 
-            int pageSize = 4;
+            int pageSize = 5;
             return View(await PaginatedList<ElderlyResident>.CreateAsync(residents.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
