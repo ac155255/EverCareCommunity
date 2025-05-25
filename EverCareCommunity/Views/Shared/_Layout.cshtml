@@ -16,15 +16,15 @@
             <h2 class="sidebar-title">EverCareCommunity</h2>
             <ul class="sidebar-nav">
                 <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-                <li><a asp-controller="Home" asp-action="Privacy">Privacy</a></li>
+                <li><a asp-controller="ElderlyResidents" asp-action="Index">Resident</a></li>
+                <li><a asp-controller="Doctors" asp-action="Index">Doctor</a></li>
+                <li><a asp-controller="Caregivers" asp-action="Index">Caregiver</a></li>
                 <li><a asp-controller="Addresses" asp-action="Index">Address</a></li>
                 <li><a asp-controller="Appointments" asp-action="Index">Appointment</a></li>
-                <li><a asp-controller="Caregivers" asp-action="Index">Caregiver</a></li>
-                <li><a asp-controller="Doctors" asp-action="Index">Doctor</a></li>
-                <li><a asp-controller="ElderlyResidents" asp-action="Index">Resident</a></li>
                 <li><a asp-controller="EmergencyContacts" asp-action="Index">Contacts</a></li>
                 <li><a asp-controller="MedicalConditions" asp-action="Index">Medical Condition</a></li>
                 <li><a asp-controller="MedicalRecords" asp-action="Index">Medical Record</a></li>
+                <li><a asp-controller="Home" asp-action="Privacy">Privacy</a></li>
             </ul>
             <div class="login-partial">
                 <partial name="_LoginPartial.cshtml" />
