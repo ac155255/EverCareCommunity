@@ -10,37 +10,45 @@ namespace EverCareCommunity
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            var connectionString = builder.Configuration.GetConnectionString("EverCareCommunityContextConnection")
-                                   ?? throw new InvalidOperationException("Connection string 'EverCareCommunityContextConnection' not found.");
 
+            // Get the database connection string
+            var connectionString = builder.Configuration.GetConnectionString("EverCareCommunityContextConnection")
+                ?? throw new InvalidOperationException("Connection string 'EverCareCommunityContextConnection' not found.");
+
+            // Register the database context
             builder.Services.AddDbContext<EverCareCommunityContext>(options =>
                 options.UseSqlServer(connectionString));
 
+            // Configure Identity with role support
             builder.Services.AddDefaultIdentity<EverCareCommunityUser>(options =>
                 options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>() // ✅ Enable roles
                 .AddEntityFrameworkStores<EverCareCommunityContext>();
 
-            // Add services to the container.
+            // Add MVC + Razor Pages
             builder.Services.AddControllersWithViews();
+            builder.Services.AddRazorPages();
 
             var app = builder.Build();
 
-            // ✅ Seed roles
+            // ✅ Seed roles on app startup
             using (var scope = app.Services.CreateScope())
             {
                 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-                string[] roles = { "Manager", "Caregiver", "Admin" };
+
+                // List all roles your app needs
+                string[] roles = { "ADMIN", "DOCTOR", "CAREGIVER", "RESIDENT" };
 
                 foreach (var role in roles)
                 {
-                    var exists = await roleManager.RoleExistsAsync(role);
-                    if (!exists)
+                    if (!await roleManager.RoleExistsAsync(role))
+                    {
                         await roleManager.CreateAsync(new IdentityRole(role));
+                    }
                 }
             }
 
-            // Configure the HTTP request pipeline.
+            // Configure middleware
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
@@ -49,10 +57,11 @@ namespace EverCareCommunity
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
             app.UseRouting();
 
-            app.UseAuthentication(); // ✅ Needed if using Identity
-            app.UseAuthorization();
+            app.UseAuthentication(); // ✅ Identity Authentication
+            app.UseAuthorization();  // ✅ Role-based Authorization
 
             app.MapControllerRoute(
                 name: "default",
@@ -60,7 +69,8 @@ namespace EverCareCommunity
 
             app.MapRazorPages();
 
-            await app.RunAsync(); // ✅ Use async
+            // Run the app
+            await app.RunAsync();
         }
     }
 }
