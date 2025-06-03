@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace EverCareCommunity.Controllers
 {
-    [Authorize(Roles = "Doctor, Caregiver , Manager")]
+    [Authorize(Roles = "Doctor, Caregiver , Manager, Admin")]
     public class AppointmentsController : Controller
     {
         private readonly EverCareCommunityContext _context;
@@ -60,7 +60,7 @@ namespace EverCareCommunity.Controllers
                     break;
             }
 
-            int pageSize = 5;
+            int pageSize = 3;
             return View(await PaginatedList<Appointment>.CreateAsync(appointments, pageNumber ?? 1, pageSize));
         }
     

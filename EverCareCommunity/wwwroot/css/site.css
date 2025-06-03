@@ -28,14 +28,13 @@ body {
 ---------------------------------------- */
 .hero {
     position: relative;
-    background: url('https://img.freepik.com/free-photo/positive-mother-daughter-enjoying-dramatic-view_1262-18574.jpg?t=st=1743469821~exp=1743473421~hmac=7949a444cd3e6042cec96361e7e42573cd4dada2d28b61fd951f0583d82ab45b&w=1380') center/cover no-repeat;
+    background: url('https://freerangestock.com/sample/183256/elderly-couple-sitting-on-couch-in-sunny-room..jpg') center/cover no-repeat;
     color: white;
     text-align: center;
     padding: 100px 20px;
     animation: fadeInUp 1s ease-out;
 }
 
-    /* Add this overlay using a ::before pseudo-element */
     .hero::before {
         content: "";
         position: absolute;
@@ -47,7 +46,7 @@ body {
         z-index: 0;
     }
 
-    /* Make sure text and buttons are above the overlay */
+
     .hero h1,
     .hero .btn {
         position: relative;

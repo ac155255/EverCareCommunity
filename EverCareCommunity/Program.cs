@@ -22,28 +22,51 @@ namespace EverCareCommunity
             // Configure Identity with role support
             builder.Services.AddDefaultIdentity<EverCareCommunityUser>(options =>
                 options.SignIn.RequireConfirmedAccount = true)
-                .AddRoles<IdentityRole>() // ✅ Enable roles
+                .AddRoles<IdentityRole>() // ✅ Enables role management
                 .AddEntityFrameworkStores<EverCareCommunityContext>();
 
-            // Add MVC + Razor Pages
+            // Add MVC and Razor Pages
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
 
             var app = builder.Build();
 
-            // ✅ Seed roles on app startup
+            // ✅ Seed roles on startup
             using (var scope = app.Services.CreateScope())
             {
-                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var services = scope.ServiceProvider;
+                var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-                // List all roles your app needs
-                string[] roles = { "ADMIN", "DOCTOR", "CAREGIVER", "RESIDENT" };
+                string[] roles = { "Admin", "Doctor", "Caregiver", "Manager", "Resident" };
 
                 foreach (var role in roles)
                 {
                     if (!await roleManager.RoleExistsAsync(role))
                     {
                         await roleManager.CreateAsync(new IdentityRole(role));
+                    }
+                }
+
+                // Optional: seed a default user and assign a role (e.g., Doctor)
+                var userManager = services.GetRequiredService<UserManager<EverCareCommunityUser>>();
+
+                string doctorEmail = "doctor@example.com";
+                string password = "SecureP@ssw0rd!";
+
+                var doctorUser = await userManager.FindByEmailAsync(doctorEmail);
+                if (doctorUser == null)
+                {
+                    doctorUser = new EverCareCommunityUser
+                    {
+                        UserName = doctorEmail,
+                        Email = doctorEmail,
+                        EmailConfirmed = true
+                    };
+
+                    var result = await userManager.CreateAsync(doctorUser, password);
+                    if (result.Succeeded)
+                    {
+                        await userManager.AddToRoleAsync(doctorUser, "Doctor");
                     }
                 }
             }
@@ -60,8 +83,8 @@ namespace EverCareCommunity
 
             app.UseRouting();
 
-            app.UseAuthentication(); // ✅ Identity Authentication
-            app.UseAuthorization();  // ✅ Role-based Authorization
+            app.UseAuthentication(); // ✅ Identity middleware
+            app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
@@ -69,7 +92,6 @@ namespace EverCareCommunity
 
             app.MapRazorPages();
 
-            // Run the app
             await app.RunAsync();
         }
     }

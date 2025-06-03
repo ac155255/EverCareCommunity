@@ -11,6 +11,7 @@ using System.ComponentModel.DataAnnotations;
 namespace EverCareCommunity.Controllers
 {
     [Authorize(Roles = "Caregiver, Manager, Admin, Doctor")]
+
     public class ElderlyResidentsController : Controller
     {
         private readonly EverCareCommunityContext _context;

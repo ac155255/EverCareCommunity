@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace EverCareCommunity.Controllers
 {
     // needs login 
-    [Authorize(Roles = "Admin, Manager, Caregiver")]
+    [Authorize(Roles = "Admin, Manager")]
     public class AddressesController : Controller
     {
         private readonly EverCareCommunityContext _context;
@@ -65,7 +65,7 @@ namespace EverCareCommunity.Controllers
                     break;
             }
 
-            int pageSize = 5;
+            int pageSize = 3;
             return View(await PaginatedList<Address>.CreateAsync(addresses.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
