@@ -4,80 +4,91 @@
     ViewData["Title"] = "Register";
 }
 
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-7">
-            <div class="card shadow-lg border-0 rounded-4">
-                <div class="card-body p-5">
-                    <h2 class="text-center mb-4">@ViewData["Title"]</h2>
+<div class="container py-5 bg-light min-vh-100 d-flex justify-content-center align-items-center">
+    <div class="col-lg-7 animate__animated animate__fadeInUp">
+        <div class="card shadow-lg border-0 rounded-4">
+            <div class="card-body p-5">
+                <h2 class="text-center mb-4"><i class="bi bi-person-plus-fill me-2"></i>@ViewData["Title"]</h2>
 
+               
+                   
                     <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
 
                         <div class="row g-3 mb-3">
-                            <div class="col-md-6 form-floating">
-                                <input asp-for="Input.FirstName" class="form-control" />
-                                <label asp-for="Input.FirstName">First Name</label>
-                                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input asp-for="Input.FirstName" class="form-control" placeholder="First Name" />
+                                    <label asp-for="Input.FirstName">First Name</label>
+                                </div>
+                                <span asp-validation-for="Input.FirstName" class="text-danger small"></span>
                             </div>
-                            <div class="col-md-6 form-floating">
-                                <input asp-for="Input.LastName" class="form-control" />
-                                <label asp-for="Input.LastName">Last Name</label>
-                                <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input asp-for="Input.LastName" class="form-control" placeholder="Last Name" />
+                                    <label asp-for="Input.LastName">Last Name</label>
+                                </div>
+                                <span asp-validation-for="Input.LastName" class="text-danger small"></span>
                             </div>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input asp-for="Input.Email" class="form-control" autocomplete="username" placeholder="name@example.com" />
+                            <input asp-for="Input.Email" class="form-control" placeholder="Email" />
                             <label asp-for="Input.Email">Email</label>
-                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                            <span asp-validation-for="Input.Email" class="text-danger small"></span>
                         </div>
 
                         <div class="mb-3">
-                            <label asp-for="Input.Role" class="form-label">Role</label>
+                            <label asp-for="Input.Role" class="form-label"><i class="bi bi-person-badge"></i> Role</label>
                             <select asp-for="Input.Role" class="form-select"
                                     asp-items="Html.GetEnumSelectList<EverCareCommunity.Areas.Identity.Data.RoleType>()">
                                 <option value="">-- Select Role --</option>
                             </select>
-                            <span asp-validation-for="Input.Role" class="text-danger"></span>
+                            <span asp-validation-for="Input.Role" class="text-danger small"></span>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input asp-for="Input.Password" class="form-control" autocomplete="new-password" placeholder="Password" />
+                            <input asp-for="Input.Password" class="form-control" placeholder="Password" />
                             <label asp-for="Input.Password">Password</label>
-                            <span asp-validation-for="Input.Password" class="text-danger"></span>
                         </div>
+                        <div class="progress mb-2" style="height: 5px;">
+                            <div id="password-strength" class="progress-bar" style="width: 0%;"></div>
+                        </div>
+                        <span asp-validation-for="Input.Password" class="text-danger small"></span>
 
-                        <div class="form-floating mb-4">
-                            <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" placeholder="Confirm Password" />
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.ConfirmPassword" class="form-control" placeholder="Confirm Password" />
                             <label asp-for="Input.ConfirmPassword">Confirm Password</label>
-                            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                            <span asp-validation-for="Input.ConfirmPassword" class="text-danger small"></span>
                         </div>
 
-                        <button id="registerSubmit" type="submit" class="btn btn-primary w-100">Register</button>
+                        <button id="registerSubmit" type="submit" class="btn btn-primary w-100 mt-3">
+                            <i class="bi bi-person-plus-fill me-1"></i> Register
+                        </button>
+                    </form>
+
+                
+            </div>
+        </div>
+
+        @if ((Model.ExternalLogins?.Count ?? 0) > 0)
+        {
+            <div class="card shadow-sm border-0 rounded-4 mt-4">
+                <div class="card-body p-4">
+                    <h4 class="text-center mb-3">Or register with</h4>
+                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                        <div class="d-grid gap-2">
+                            @foreach (var provider in Model.ExternalLogins!)
+                            {
+                                <button type="submit" class="btn btn-outline-primary" name="provider" value="@provider.Name">
+                                    @provider.DisplayName
+                                </button>
+                            }
+                        </div>
                     </form>
                 </div>
             </div>
-
-            @if ((Model.ExternalLogins?.Count ?? 0) > 0)
-            {
-                <div class="card shadow-sm border-0 rounded-4 mt-4">
-                    <div class="card-body p-4">
-                        <h4 class="text-center mb-3">Or register with</h4>
-                        <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-                            <div class="d-grid gap-2">
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                    <button type="submit" class="btn btn-outline-primary" name="provider" value="@provider.Name">
-                                        @provider.DisplayName
-                                    </button>
-                                }
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            }
-        </div>
+        }
     </div>
 </div>
 
