@@ -1,14 +1,84 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "EverCare Community - Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
- 
+<section class="welcome-section text-center text-white">
+    <div class="container">
+        <h1 class="fw-bold mb-4">Welcome to <span class="highlight">EverCare Community</span></h1>
+        <p class="lead mb-4">
+            At <strong>EverCare</strong>, we believe that elderly care is more than just medical support —
+            it’s about dignity, comfort, and human connection.
+            Our mission is to create a community where residents, caregivers, and doctors work hand-in-hand
+            to improve lives through compassion and care.
+        </p>
 
+        <div class="mt-4 mb-5">
+            <a href="@Url.Action("Create", "ElderlyResidents")" class="btn btn-success px-5 py-3 fw-semibold me-3 mb-3">
+                <i class="fas fa-heart me-2"></i> Join Our Community
+            </a>
+            <a href="@Url.Action("Index", "Appointment")" class="btn btn-outline-light px-5 py-3 fw-semibold mb-3">
+                <i class="fas fa-calendar-check me-2"></i> Explore Appointments
+            </a>
+        </div>
+    </div>
+</section>
 
+<!-- 💙 MISSION SECTION -->
+<section class="mission-section py-5 text-center text-dark">
+    <div class="container">
+        <h2 class="fw-bold mb-4">Our Purpose</h2>
+        <p class="lead mb-5">
+            We are dedicated to ensuring every elderly resident feels safe, valued, and cared for.
+            Through innovative digital tools, EverCare helps families, caregivers, and healthcare professionals
+            stay connected — making senior living easier and more meaningful.
+        </p>
 
+        <div class="row justify-content-center">
+            <div class="col-md-4 mb-4">
+                <div class="info-card p-4 rounded-4 shadow-sm">
+                    <i class="fas fa-users fs-2 text-primary mb-3"></i>
+                    <h5 class="fw-bold">Community Connection</h5>
+                    <p>We bridge the gap between residents, caregivers, and doctors through one unified system.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="info-card p-4 rounded-4 shadow-sm">
+                    <i class="fas fa-hand-holding-heart fs-2 text-success mb-3"></i>
+                    <h5 class="fw-bold">Compassionate Care</h5>
+                    <p>Every feature in EverCare is designed to make life simpler, safer, and more personal.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="info-card p-4 rounded-4 shadow-sm">
+                    <i class="fas fa-stethoscope fs-2 text-info mb-3"></i>
+                    <h5 class="fw-bold">Reliable Healthcare</h5>
+                    <p>Doctors and caregivers collaborate digitally to provide 24/7 care and health tracking.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
+<!-- 🕊️ QUOTE SECTION -->
+<section class="quote-section text-center text-white py-5">
+    <div class="container">
+        <blockquote class="blockquote mb-4">
+            “At EverCare, every heartbeat matters — because care begins with connection.”
+        </blockquote>
+        <p class="mb-0 fst-italic">— The EverCare Team</p>
+    </div>
+</section>
 
+<!-- 🌿 CALL TO ACTION -->
+<section class="cta-section text-center py-5">
+    <div class="container">
+        <h2 class="fw-bold mb-4 text-dark">Start Your Journey with EverCare</h2>
+        <p class="lead mb-5">
+            Whether you’re joining as a resident, caregiver, or doctor — together, we create a
+            connected community built on compassion and trust.
+        </p>
+        <a href="@Url.Action("Create", "ElderlyResidents")" class="btn btn-primary btn-lg px-5 py-3 fw-semibold">
+            <i class="fas fa-door-open me-2"></i> Get Started
+        </a>
+    </div>
+</section>

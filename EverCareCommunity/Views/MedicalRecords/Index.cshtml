@@ -7,15 +7,14 @@
 <h1>Medical Record</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn-action">Create New</a>
 </p>
 <form asp-action="Index" method="get">
     <div class="form-actions no-color">
         <p>
             <label>Find by Name: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" /></label>
             <input type="submit" value="Search" class="btn btn-default" /> |
-            <a asp-action="Index">Back to Full List</a>
-        </p>
+            <a asp-action="Index" class="btn-action">Back to Full List</a>
     </div>
 </form>
 <table class="table">
@@ -57,11 +56,12 @@
             <td>
                     @Html.DisplayFor(modelItem => item.Doctor.FirstName)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.RecordID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.RecordID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.RecordID">Delete</a>
-            </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.RecordID" class="btn-table edit">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.RecordID" class="btn-table details">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.RecordID" class="btn-table delete">Delete</a>
+                </td>
+
         </tr>
 }
     </tbody>

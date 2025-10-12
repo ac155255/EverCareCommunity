@@ -7,14 +7,14 @@
 <h1>Caregiver</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn-action">Create New</a>
 </p>
 <form asp-action="Index" method="get">
     <div class="form-actions no-color">
         <p>
             <label>Find by name: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" /></label>
             <input type="submit" value="Search" class="btn btn-default" /> |
-            <a asp-action="Index">Back to Full List</a>
+            <a asp-action="Index" class="btn-action">Back to Full List</a>
         </p>
     </div>
 </form>
@@ -69,11 +69,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Availability)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.CaregiverID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CaregiverID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CaregiverID">Delete</a>
-            </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.CaregiverID" class="btn-table edit">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.CaregiverID" class="btn-table details">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.CaregiverID" class="btn-table delete">Delete</a>
+                </td>
+
         </tr>
 }
     </tbody>

@@ -117,7 +117,7 @@ namespace EverCareCommunity.Controllers
                 ModelState.AddModelError("DateOfBirth", "Resident must be at least 40 years old.");
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 try
                 {

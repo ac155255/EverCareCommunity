@@ -23,35 +23,7 @@ body {
         color: black !important;
     }
 
-/* ---------------------------------------
-   HERO SECTION
----------------------------------------- */
-.hero {
-    position: relative;
-    background: url('https://freerangestock.com/sample/183256/elderly-couple-sitting-on-couch-in-sunny-room..jpg') center/cover no-repeat;
-    color: white;
-    text-align: center;
-    padding: 100px 20px;
-    animation: fadeInUp 1s ease-out;
-}
 
-    .hero::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        background-color: rgba(0, 0, 0, 0.4); /* 40% black overlay */
-        z-index: 0;
-    }
-
-
-    .hero h1,
-    .hero .btn {
-        position: relative;
-        z-index: 1;
-    }
 
 
 /* ---------------------------------------
@@ -172,3 +144,365 @@ body {
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
     border-radius: 8px;
 }
+section.bg-light {
+    background: linear-gradient(to bottom, #f8f9fa, #ffffff);
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    border-radius: 12px;
+}
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+        transition: 0.3s ease;
+    }
+
+.card {
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+section.bg-light {
+    background: linear-gradient(to bottom right, #f9fafc, #ffffff);
+    border-radius: 0;
+}
+
+.btn-primary, .btn-success {
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+    .btn-primary:hover, .btn-success:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+.card, .p-4.bg-white {
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .card:hover, .p-4.bg-white:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+.blockquote {
+    border-left: 5px solid #007bff;
+    padding-left: 20px;
+    margin-top: 40px;
+}
+/* Background */
+.join-section {
+    background: linear-gradient(135deg, #74b9ff 0%, #a29bfe 50%, #81ecec 100%);
+    min-height: 100vh;
+    padding: 60px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-attachment: fixed;
+    animation: gradientShift 10s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Main glass container */
+.glass-card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    max-width: 1100px;
+    margin: auto;
+    animation: fadeIn 1.5s ease;
+}
+
+/* Inner info glass boxes */
+.info-glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .info-glass:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
+    }
+
+/* Buttons */
+.btn {
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+    .btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+
+/* Fade-in effect */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.blockquote {
+    border-left: 4px solid rgba(255, 255, 255, 0.6);
+    padding-left: 20px;
+    font-size: 1.2rem;
+}
+/* ---------------------------------------
+   EVERCARE JOIN SECTION
+---------------------------------------- */
+.evercare-join-section {
+    position: relative;
+    background: url('https://freerangestock.com/sample/183256/elderly-couple-sitting-on-couch-in-sunny-room..jpg') center/cover no-repeat;
+    color: white;
+    padding: 120px 20px;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-top: 50px;
+}
+
+    .evercare-join-section .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(44, 62, 80, 0.85), rgba(41, 128, 185, 0.65));
+        z-index: 0;
+    }
+
+    .evercare-join-section .content {
+        position: relative;
+        z-index: 1;
+        max-width: 1100px;
+        margin: auto;
+        animation: fadeInUp 1.3s ease-in-out;
+    }
+
+    .evercare-join-section .highlight {
+        color: #74b9ff;
+    }
+
+.feature-card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    color: #ecf0f1;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .feature-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
+    }
+
+.button-group .btn {
+    border-radius: 40px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .button-group .btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+
+.blockquote {
+    border-left: 4px solid #74b9ff;
+    padding-left: 20px;
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+/* ---------------------------------------
+   CLEAN HOMEPAGE SECTIONS
+---------------------------------------- */
+.welcome-section {
+    background: linear-gradient(135deg, #2c3e50, #34495e, #1e272e);
+    padding: 100px 20px;
+}
+
+.highlight {
+    color: #74b9ff;
+}
+
+.welcome-section .btn {
+    border-radius: 40px;
+    transition: all 0.3s ease;
+}
+
+    .welcome-section .btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(255,255,255,0.2);
+    }
+
+/* Mission section */
+.mission-section {
+    background: #f8f9fa;
+}
+
+.info-card {
+    background: white;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .info-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+/* Quote section */
+.quote-section {
+    background: linear-gradient(135deg, #1e272e, #2c3e50);
+    font-size: 1.2rem;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+}
+
+/* CTA */
+.cta-section {
+    background: #ffffff;
+}
+
+    .cta-section .btn {
+        border-radius: 40px;
+        transition: all 0.3s ease;
+    }
+
+        .cta-section .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+/* ---------------------------------------
+   TABLE + LOGOUT FIXES
+---------------------------------------- */
+
+/* Match table headers to navbar color */
+.table th {
+    background-color: #1e293b;
+    /* same as navbar */
+    color: #ffffff; /* white text for contrast */
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 2px solid #2f4f4f; /* subtle contrast line */
+}
+
+/* Improve table rows for readability */
+.table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Fix Logout button back to normal style */
+.sidebar a.logout {
+    background: none;
+    border: none;
+    color: #ffffff;
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 5px;
+    text-align: left;
+    transition: background-color 0.2s ease;
+}
+
+    .sidebar a.logout:hover {
+        background-color: rgba(255, 255, 255, 0.15);
+    }
+/* ---------------------------------------
+   CREATE + BACK TO FULL LIST BUTTONS
+---------------------------------------- */
+
+/* Base button style */
+a.btn-action {
+    display: inline-block;
+    background-color: darkslategray;
+    color: white !important;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    margin-right: 10px;
+}
+
+    /* Hover animation */
+    a.btn-action:hover {
+        background-color: #2f4f4f; /* slightly darker shade */
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+/* Optional: subtle fade-in when page loads */
+a.btn-action {
+    animation: fadeInUp 0.6s ease;
+}
+/* ---------------------------------------
+   Table Action Buttons: Edit, Details, Delete
+---------------------------------------- */
+
+.btn-table {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-weight: 600;
+    color: white !important;
+    text-decoration: none;
+    margin-right: 5px;
+    transition: all 0.3s ease;
+}
+
+    /* Specific colors for each action */
+    .btn-table.edit {
+        background-color: #1e90ff; /* blue */
+    }
+
+    .btn-table.details {
+        background-color: #2e8b57; /* green */
+    }
+
+    .btn-table.delete {
+        background-color: #dc143c; /* red */
+    }
+
+    /* Hover animation */
+    .btn-table:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+        opacity: 0.9;
+    }
